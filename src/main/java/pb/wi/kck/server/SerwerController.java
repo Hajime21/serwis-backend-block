@@ -14,6 +14,10 @@ public class SerwerController {
 
     Integer liczbaProduktow = 0;
 
+    //wczytywanie produktow z bazy danych...
+    //aktualizacja liczbyProduktow...
+
+
     @PostMapping("/api/product/new")
     public Map<String, Integer> postRecipe(@RequestBody Product newProduct) {
         produkty.put(liczbaProduktow + 1, newProduct);

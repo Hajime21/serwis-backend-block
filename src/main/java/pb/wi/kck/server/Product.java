@@ -1,12 +1,19 @@
 package pb.wi.kck.server;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+
+@Data
 public class Product {
-    private int id;
-    private String name;
-    private String description;
+    @NonNull private int id;
+    @NonNull private String name;
+    @NonNull private String description;
     private String barcode;
     private String imgPath;
     private int targetQuantity;
+
+    Product(){}
 
     Product(String name, String description, String barcode, String imgPath, int targetQuantity) {
         this.name = name;
