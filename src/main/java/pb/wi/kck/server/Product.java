@@ -1,15 +1,18 @@
 package pb.wi.kck.server;
 
 public class Product {
+    private int id;
     private String name;
     private String description;
-    private String ingredients;
-    private String directions;
+    private String barcode;
+    private String imgPath;
+    private int targetQuantity;
 
-    Product(String name, String description, String ingredients, String directions) {
+    Product(String name, String description, String barcode, String imgPath, int targetQuantity) {
         this.name = name;
         this.description = description;
-        this.ingredients = ingredients;
-        this.directions = directions;
+        this.barcode = barcode;
+        this.imgPath = imgPath;
+        this.targetQuantity = targetQuantity;
     }
 }
