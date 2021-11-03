@@ -12,6 +12,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SerwerController {
     ConcurrentHashMap<Integer, ProductBlueprint> produkty = new ConcurrentHashMap<>();
 
+    FoodProductBlueprint test1 = FoodProductBlueprint.foodProductBlueprintBuilder()
+            .blueprintId(1)
+            .name("Mleko UHT 2% 1L")
+            .manufacturer("Mlekovita")
+            .grammage(1000)
+            .build();
+
     Integer liczbaProduktow = 0;
 
     //wczytywanie produktow z bazy danych...

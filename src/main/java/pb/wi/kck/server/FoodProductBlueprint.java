@@ -1,26 +1,41 @@
 package pb.wi.kck.server;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Entity
-@Builder
+@EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
+@Entity
 public class FoodProductBlueprint extends ProductBlueprint {
-    private long useByDate;                     //4
-    private int grammage;                       //4
-    private int kcalPer100g;                    //4
-    private int protein;                        //4
-    private int fat;                            //4
-    private int carbohydates;                   //4
-    //private int productPackage;               //5
+    protected long useByDate;                     //4
+    protected int grammage;                       //4
+    protected int kcalPer100g;                    //4
+    protected int protein;                        //4
+    protected int fat;                            //4
+    protected int carbohydrates;                  //4
+    protected int productPackage;                 //5
 
-    FoodProductBlueprint(){
-        super();
+    public FoodProductBlueprint() {}
+
+    @Id
+    @Override
+    public int getBlueprintId() {
+        return super.getBlueprintId();
     }
 
-    //FoodProductBlueprint(String name, String description, String barcode, String imgPath, int targetQuantity) {
-        //super(name, description, barcode, imgPath, targetQuantity);
+    @Builder(builderMethodName = "foodProductBlueprintBuilder")
+    public FoodProductBlueprint(int blueprintId, String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, long useByDate, int grammage, int kcalPer100g, int protein, int fat, int carbohydrates, int productPackage) {
+        super(blueprintId, name, manufacturer, barcode, barcodeType, description, imgPath, targetQuantity);
+        this.useByDate = useByDate;
+        this.grammage = grammage;
+        this.kcalPer100g = kcalPer100g;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrates = carbohydrates;
+        this.productPackage = productPackage;
     }
+
 }

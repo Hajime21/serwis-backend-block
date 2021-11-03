@@ -10,7 +10,7 @@ public class SerwerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SerwerApplication.class, args);
-        System.out.println(String.format("LocalDate size: {0}", getObjectSize(LocalDate))
+
     }
 
 }

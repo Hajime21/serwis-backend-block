@@ -1,0 +1,20 @@
+
+
+PPPPPPPPPPPPPPPPP   BBBBBBBBBBBBBBBBB
+P::::::::::::::::P  B::::::::::::::::B
+P::::::PPPPPP:::::P B::::::BBBBBB:::::B
+PP:::::P     P:::::PBB:::::B     B:::::B
+  P::::P     P:::::P  B::::B     B:::::B
+  P::::P     P:::::P  B::::B     B:::::B
+  P::::PPPPPP:::::P   B::::BBBBBB:::::B
+  P:::::::::::::PP    B:::::::::::::BB
+  P::::PPPPPPPPP      B::::BBBBBB:::::B
+  P::::P              B::::B     B:::::B
+  P::::P              B::::B     B:::::B
+  P::::P              B::::B     B:::::B
+PP::::::PP          BB:::::BBBBBB::::::B
+P::::::::P          B:::::::::::::::::B
+P::::::::P          B::::::::::::::::B
+PPPPPPPPPP          BBBBBBBBBBBBBBBBB
+
+
