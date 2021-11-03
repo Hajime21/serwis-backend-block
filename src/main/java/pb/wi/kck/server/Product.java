@@ -1,25 +1,19 @@
 package pb.wi.kck.server;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.time.LocalDate;
+
+@Entity
 @Data
 public class Product {
-    @NonNull private int id;
-    @NonNull private String name;
-    @NonNull private String description;
-    private String barcode;
-    private String imgPath;
-    private int targetQuantity;
+    @Id private int productId;
+    private int blueprintId;
+    private int receiptId;
+    private LocalDate termin;
+    private long terminL;
 
-    Product(){}
 
-    Product(String name, String description, String barcode, String imgPath, int targetQuantity) {
-        this.name = name;
-        this.description = description;
-        this.barcode = barcode;
-        this.imgPath = imgPath;
-        this.targetQuantity = targetQuantity;
-    }
 }
