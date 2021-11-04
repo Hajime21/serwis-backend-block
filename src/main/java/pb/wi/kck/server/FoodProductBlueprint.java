@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 public class FoodProductBlueprint extends ProductBlueprint {
-    protected long useByDate;                     //4
     protected int grammage;                       //4
     protected int kcalPer100g;                    //4
     protected int protein;                        //4
@@ -27,9 +26,8 @@ public class FoodProductBlueprint extends ProductBlueprint {
     }
 
     @Builder(builderMethodName = "foodProductBlueprintBuilder")
-    public FoodProductBlueprint(int blueprintId, String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, long useByDate, int grammage, int kcalPer100g, int protein, int fat, int carbohydrates, int productPackage) {
-        super(blueprintId, name, manufacturer, barcode, barcodeType, description, imgPath, targetQuantity);
-        this.useByDate = useByDate;
+    public FoodProductBlueprint(int blueprintId, String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, long modificationDate, int grammage, int kcalPer100g, int protein, int fat, int carbohydrates, int productPackage) {
+        super(blueprintId, name, manufacturer, barcode, barcodeType, description, imgPath, targetQuantity, modificationDate);
         this.grammage = grammage;
         this.kcalPer100g = kcalPer100g;
         this.protein = protein;
