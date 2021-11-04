@@ -1,13 +1,16 @@
 package pb.wi.kck;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import pb.wi.kck.server.FoodProduct;
 import pb.wi.kck.server.FoodProductBlueprint;
 
 import java.time.LocalDate;
 
-@SpringBootApplication
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class SerwerApplication {
 
     public static void main(String[] args) {
@@ -25,6 +28,12 @@ public class SerwerApplication {
                 .blueprintId(1)
                 .receiptId(10)
                 .build();
+
+        System.out.println("\n\n");
+        System.out.println(test1.toString());
+        System.out.println(test1.getName());
+        System.out.println("\n");
+        System.out.println(test2.toString());
 
     }
 
