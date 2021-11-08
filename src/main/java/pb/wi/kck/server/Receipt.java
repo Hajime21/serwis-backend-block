@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor; //?
 
+import javax.persistence.Entity;
+
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Entity
 public class Receipt {
     private int receiptId;
     private float receiptValue;

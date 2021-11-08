@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@SuperBuilder //https://www.baeldung.com/lombok-builder-inheritance
+//@SuperBuilder //https://www.baeldung.com/lombok-builder-inheritance
 public class Product {
     @Id protected int productId;
     protected int blueprintId;
@@ -22,4 +22,5 @@ public class Product {
     public Product() {
 
     }
+
 }
