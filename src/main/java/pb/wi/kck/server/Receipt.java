@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor; //?
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 public class Receipt {
-    private int receiptId;
+    @Id private int receiptId;
     private float receiptValue;
     private long purchaseDate;
     private String shopName;

@@ -1,21 +1,16 @@
 package pb.wi.kck.server;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 
 import javax.persistence.Entity;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@ToString(callSuper = true) @EqualsAndHashCode(callSuper = true) @Data
 @AllArgsConstructor
-@SuperBuilder
 @Entity
 public class FoodProduct extends Product{
-    protected int productId;
 
-    public FoodProduct() {
-
+    @Builder(builderMethodName = "foodProductBuilder")
+    public FoodProduct(int productId, int blueprintId, int receiptId, int invoiceId, long useByDate, int quantity, String location) {
+        super(productId, blueprintId, receiptId, invoiceId, useByDate, quantity, location);
     }
 }

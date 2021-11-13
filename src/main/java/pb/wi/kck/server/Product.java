@@ -1,6 +1,9 @@
 package pb.wi.kck.server;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
@@ -9,7 +12,8 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-//@SuperBuilder //https://www.baeldung.com/lombok-builder-inheritance
+@AllArgsConstructor
+@Builder(builderMethodName = "productBuilder")
 public class Product {
     @Id protected int productId;
     protected int blueprintId;
@@ -19,8 +23,6 @@ public class Product {
     protected int quantity; //czy na pewno?
     protected String location;
 
-    public Product() {
-
-    }
+    public Product() {}
 
 }

@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@ToString(callSuper = true) @ EqualsAndHashCode(callSuper = true) @Data
+@ToString(callSuper = true) @EqualsAndHashCode(callSuper = true) @Data
 @AllArgsConstructor
 @Entity
 public class FoodProductBlueprint extends ProductBlueprint {

@@ -1,10 +1,11 @@
 package pb.wi.kck.server;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Invoice {
-    private int invoiceId;
+    @Id private int invoiceId;
     private String invoiceName;
     private int sellerNIP;
     private int buyerNIP;

@@ -2,6 +2,8 @@ package pb.wi.kck.server;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @Data
 @Builder(builderMethodName = "productBlueprintBuilder")
@@ -20,7 +22,7 @@ public class ProductBlueprint {
     protected String description;                 //3
     protected String imgPath;                     //3
     protected int targetQuantity;                 //3
-    protected long modificationDate;              //3
+    protected LocalDateTime modificationDate;              //3
 
     public ProductBlueprint() {}
 
