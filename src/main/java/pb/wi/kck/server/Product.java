@@ -7,9 +7,9 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Builder(builderMethodName = "productBuilder")
-@Entity
+@Entity(name = "product")
 public class Product {
-    @Id @GeneratedValue protected int productId;
+    @Id @GeneratedValue private int productId;
     protected int blueprintId;
     protected int receiptId;
     protected int invoiceId;
@@ -21,6 +21,15 @@ public class Product {
 
     public Product(int productId, int blueprintId, int receiptId, int invoiceId, LocalDate useByDate, int quantity, String location) {
         this.productId = productId;
+        this.blueprintId = blueprintId;
+        this.receiptId = receiptId;
+        this.invoiceId = invoiceId;
+        this.useByDate = useByDate;
+        this.quantity = quantity;
+        this.location = location;
+    }
+
+    public Product(int blueprintId, int receiptId, int invoiceId, LocalDate useByDate, int quantity, String location) {
         this.blueprintId = blueprintId;
         this.receiptId = receiptId;
         this.invoiceId = invoiceId;

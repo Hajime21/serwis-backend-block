@@ -1,4 +1,4 @@
-package pb.wi.kck.server;
+package pb.wi.kck.server.dto;
 
 import lombok.Builder;
 

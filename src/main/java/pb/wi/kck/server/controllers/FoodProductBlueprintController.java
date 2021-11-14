@@ -1,7 +1,10 @@
-package pb.wi.kck.server;
+package pb.wi.kck.server.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import pb.wi.kck.server.FoodProductBlueprint;
+import pb.wi.kck.server.exceptions.FoodProductBlueprintNotFoundException;
+import pb.wi.kck.server.repositories.FoodProductBlueprintRepository;
 
 import java.util.List;
 
