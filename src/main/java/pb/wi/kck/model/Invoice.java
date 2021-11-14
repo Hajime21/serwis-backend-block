@@ -3,9 +3,9 @@ package pb.wi.kck.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+//@Entity
 public class Invoice {
-    @Id private int invoiceId;
+    @Id private Integer invoiceId;
     private String invoiceName;
     private int sellerNIP;
     private int buyerNIP;

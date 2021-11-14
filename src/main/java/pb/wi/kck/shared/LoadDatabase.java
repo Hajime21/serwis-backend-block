@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pb.wi.kck.model.ProductBlueprint;
-import pb.wi.kck.repository.ProductBlueprintRepository;
+import pb.wi.kck.repositories.ProductBlueprintJpaRepository;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +16,7 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(ProductBlueprintRepository repository) {
+    CommandLineRunner initDatabase(ProductBlueprintJpaRepository repository) {
         return args -> {
             var prod = new ProductBlueprint(1,"Domestos 1L","Clean","","","Usuwa kase","",1, LocalDateTime.now());
             log.info("Preloading " + repository.save(prod));

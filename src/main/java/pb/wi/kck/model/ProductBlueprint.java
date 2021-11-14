@@ -1,14 +1,19 @@
-package pb.wi.kck.server;
+package pb.wi.kck.model;
 
 import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-@Data
-@EqualsAndHashCode
+@Getter
+@Setter
 @ToString
+@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder(builderMethodName = "productBlueprintBuilder")
 @Entity(name = "ProductBlueprint")
@@ -19,7 +24,7 @@ public class ProductBlueprint {
     //3 - bajery
     //4 - dieta
     //5 - bajery juz ostre
-    protected @Id @GeneratedValue int blueprintId;//1
+    protected @Id @GeneratedValue @NonNull Integer productBlueprintId;//1
     protected String name;                        //1
     protected String manufacturer;                //2
     protected String barcode;                     //2
@@ -29,18 +34,16 @@ public class ProductBlueprint {
     protected int targetQuantity;                 //5
     protected LocalDateTime modificationDate;     //5
 
-    public ProductBlueprint() {}
-
-    //konstruktor dla dziedziczacych klas (bez blueprintId)
-    public ProductBlueprint(String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, LocalDateTime modificationDate) {
-        this.name = name;
-        this.manufacturer = manufacturer;
-        this.barcode = barcode;
-        this.barcodeType = barcodeType;
-        this.description = description;
-        this.imgPath = imgPath;
-        this.targetQuantity = targetQuantity;
-        this.modificationDate = modificationDate;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ProductBlueprint that = (ProductBlueprint) o;
+        return productBlueprintId != null && Objects.equals(productBlueprintId, that.productBlueprintId);
     }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

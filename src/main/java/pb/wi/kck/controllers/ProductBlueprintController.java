@@ -4,44 +4,44 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.exceptions.ProductBlueprintNotFoundException;
-import pb.wi.kck.repository.ProductBlueprintRepository;
+import pb.wi.kck.repositories.ProductBlueprintJpaRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/blueprint")
+@RequestMapping("/api/blueprints/generic")
 public class ProductBlueprintController {
 
-    private final ProductBlueprintRepository productBlueprintRepository;
+    private final ProductBlueprintJpaRepository productBlueprintJpaRepository;
 
-    ProductBlueprintController(ProductBlueprintRepository productBlueprintRepository) {
-        this.productBlueprintRepository = productBlueprintRepository;
+    ProductBlueprintController(ProductBlueprintJpaRepository productBlueprintJpaRepository) {
+        this.productBlueprintJpaRepository = productBlueprintJpaRepository;
     }
 
     @GetMapping()
     List<ProductBlueprint> getAll() {
-        return productBlueprintRepository.findAll();
+        return productBlueprintJpaRepository.findAll();
     }
 
     @PostMapping("/new")
     ProductBlueprint newProductBlueprint(@RequestBody ProductBlueprint newProductBlueprint) {
-        return productBlueprintRepository.save(newProductBlueprint);
+        return productBlueprintJpaRepository.save(newProductBlueprint);
     }
 
-    @GetMapping(value = "/{blueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ProductBlueprint getProductBlueprint(@PathVariable Integer blueprintId) {
-        return productBlueprintRepository.findById(blueprintId)
-                .orElseThrow(() -> new ProductBlueprintNotFoundException(blueprintId));
+    @GetMapping(value = "/{productBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ProductBlueprint getProductBlueprint(@PathVariable Integer productBlueprintId) {
+        return productBlueprintJpaRepository.findById(productBlueprintId)
+                .orElseThrow(() -> new ProductBlueprintNotFoundException(productBlueprintId));
     }
 
-    @DeleteMapping(value = "/{blueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void deleteProductBlueprint(@PathVariable Integer blueprintId) {
-        productBlueprintRepository.deleteById(blueprintId);
+    @DeleteMapping(value = "/{productBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void deleteProductBlueprint(@PathVariable Integer productBlueprintId) {
+        productBlueprintJpaRepository.deleteById(productBlueprintId);
     }
 
-    @PutMapping(value = "/{blueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ProductBlueprint modifyProductBlueprint(@PathVariable Integer blueprintId, @RequestBody ProductBlueprint modifiedProductBlueprint) {
-        return productBlueprintRepository.findById(blueprintId)
+    @PutMapping(value = "/{productBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ProductBlueprint modifyProductBlueprint(@PathVariable Integer productBlueprintId, @RequestBody ProductBlueprint modifiedProductBlueprint) {
+        return productBlueprintJpaRepository.findById(productBlueprintId)
                 .map(pb -> {
                     pb.setName(modifiedProductBlueprint.getName());
                     pb.setBarcode(modifiedProductBlueprint.getBarcode());
@@ -51,11 +51,11 @@ public class ProductBlueprintController {
                     pb.setManufacturer(modifiedProductBlueprint.getManufacturer());
                     pb.setModificationDate(modifiedProductBlueprint.getModificationDate());
                     pb.setTargetQuantity(modifiedProductBlueprint.getTargetQuantity());
-                    return productBlueprintRepository.save(pb);
+                    return productBlueprintJpaRepository.save(pb);
                 })
                 .orElseGet(() -> {
-                    modifiedProductBlueprint.setBlueprintId(blueprintId);
-                    return productBlueprintRepository.save(modifiedProductBlueprint);
+                    modifiedProductBlueprint.setProductBlueprintId(productBlueprintId);
+                    return productBlueprintJpaRepository.save(modifiedProductBlueprint);
                 });
     }
 

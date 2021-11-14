@@ -4,12 +4,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.model.FoodProductBlueprint;
 import pb.wi.kck.exceptions.FoodProductBlueprintNotFoundException;
-import pb.wi.kck.repository.FoodProductBlueprintJpaRepository;
+import pb.wi.kck.repositories.FoodProductBlueprintJpaRepository;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/foodblueprint")
+@RequestMapping("/api/blueprints/food")
 public class FoodProductBlueprintController {
 
     private final FoodProductBlueprintJpaRepository foodProductBlueprintJpaRepository;
@@ -28,20 +28,20 @@ public class FoodProductBlueprintController {
         return foodProductBlueprintJpaRepository.save(newFoodProductBlueprint);
     }
 
-    @GetMapping(value = "/{foodBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    FoodProductBlueprint getFoodProductBlueprint(@PathVariable Integer foodBlueprintId) {
-        return foodProductBlueprintJpaRepository.findById(foodBlueprintId)
-                .orElseThrow(() -> new FoodProductBlueprintNotFoundException(foodBlueprintId));
+    @GetMapping(value = "/{foodProductBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    FoodProductBlueprint getFoodProductBlueprint(@PathVariable Integer foodProductBlueprintId) {
+        return foodProductBlueprintJpaRepository.findById(foodProductBlueprintId)
+                .orElseThrow(() -> new FoodProductBlueprintNotFoundException(foodProductBlueprintId));
     }
 
-    @DeleteMapping(value = "/{foodBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void deleteProductBlueprint(@PathVariable Integer foodBlueprintId) {
-        foodProductBlueprintJpaRepository.deleteById(foodBlueprintId);
+    @DeleteMapping(value = "/{foodProductBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    void deleteFoodProductBlueprint(@PathVariable Integer foodProductBlueprintId) {
+        foodProductBlueprintJpaRepository.deleteById(foodProductBlueprintId);
     }
 
-    @PutMapping(value = "/{foodBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    FoodProductBlueprint modifyProductBlueprint(@PathVariable Integer foodBlueprintId, @RequestBody FoodProductBlueprint modifiedFoodProductBlueprint) {
-        return foodProductBlueprintJpaRepository.findById(foodBlueprintId)
+    @PutMapping(value = "/{foodProductBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    FoodProductBlueprint modifyFoodProductBlueprint(@PathVariable Integer foodProductBlueprintId, @RequestBody FoodProductBlueprint modifiedFoodProductBlueprint) {
+        return foodProductBlueprintJpaRepository.findById(foodProductBlueprintId)
                 .map(pb -> {
                     pb.setName(modifiedFoodProductBlueprint.getName());
                     pb.setBarcode(modifiedFoodProductBlueprint.getBarcode());
@@ -59,7 +59,7 @@ public class FoodProductBlueprintController {
                     return foodProductBlueprintJpaRepository.save(pb);
                 })
                 .orElseGet(() -> {
-                    modifiedFoodProductBlueprint.setBlueprintId(foodBlueprintId);
+                    modifiedFoodProductBlueprint.setFoodProductBlueprintId(foodProductBlueprintId);
                     return foodProductBlueprintJpaRepository.save(modifiedFoodProductBlueprint);
                 });
     }

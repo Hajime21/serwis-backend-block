@@ -10,9 +10,9 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Entity
+//@Entity
 public class Receipt {
-    @Id private int receiptId;
+    @Id private Integer receiptId;
     private float receiptValue;
     private long purchaseDate;
     private String shopName;
