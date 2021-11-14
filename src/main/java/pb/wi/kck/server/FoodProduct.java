@@ -7,13 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
-@ToString(callSuper = true) @EqualsAndHashCode(callSuper = true) @Data
+@Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @AllArgsConstructor
-@Entity(name = "foodproduct")
-public class FoodProduct extends Product{
-    @Id @GeneratedValue private int foodProductId;
+@Entity(name = "FoodProduct")
+public class FoodProduct extends Product {
+    private @Id
+    @GeneratedValue
+    int foodProductId;
 
-    public FoodProduct() {}
+    public FoodProduct() {
+    }
 
     @Builder(builderMethodName = "foodProductBuilder")
     public FoodProduct(int foodProductId, int blueprintId, int receiptId, int invoiceId, LocalDate useByDate, int quantity, String location) {

@@ -1,48 +1,29 @@
 package pb.wi.kck.server.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class FoodProductBlueprintDTO extends ProductBlueprintDTO {
-    protected int grammage;
-    protected int kcalPer100g;
-    protected int protein;
-    protected int fat;
-    protected int carbohydrates;
-    protected int productPackage;
-
-    @Builder(builderMethodName = "foodProductBlueprintDTOBuilder")
-    public FoodProductBlueprintDTO(int blueprintId, String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, LocalDateTime modificationDate) {
-        super(blueprintId, name, manufacturer, barcode, barcodeType, description, imgPath, targetQuantity, modificationDate);
-    }
-
-    public int getGrammage() {
-        return grammage;
-    }
-
-    public int getKcalPer100g() {
-        return kcalPer100g;
-    }
-
-    public int getProtein() {
-        return protein;
-    }
-
-    public int getFat() {
-        return fat;
-    }
-
-    public int getCarbohydrates() {
-        return carbohydrates;
-    }
-
-    public int getProductPackage() {
-        return productPackage;
-    }
+@Getter
+@EqualsAndHashCode
+@ToString
+@AllArgsConstructor
+@Builder(builderMethodName = "foodProductBlueprintDTOBuilder")
+public class FoodProductBlueprintDTO {
+    protected final int blueprintId;
+    protected final String name;
+    protected final String manufacturer;
+    protected final String barcode;
+    protected final String barcodeType;
+    protected final String description;
+    protected final String imgPath;
+    protected final int targetQuantity;
+    protected final LocalDateTime modificationDate;
+    protected final int grammage;
+    protected final int kcalPer100g;
+    protected final int protein;
+    protected final int fat;
+    protected final int carbohydrates;
+    protected final int productPackage;
 
 }

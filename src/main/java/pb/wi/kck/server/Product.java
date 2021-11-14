@@ -1,15 +1,20 @@
 package pb.wi.kck.server;
 
-import lombok.Builder;
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
+@Data
+@EqualsAndHashCode
+@ToString
+@AllArgsConstructor
 @Builder(builderMethodName = "productBuilder")
-@Entity(name = "product")
+@Entity(name = "Product")
 public class Product {
-    @Id @GeneratedValue private int productId;
+    private @Id @GeneratedValue int productId;
     protected int blueprintId;
     protected int receiptId;
     protected int invoiceId;
@@ -19,16 +24,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(int productId, int blueprintId, int receiptId, int invoiceId, LocalDate useByDate, int quantity, String location) {
-        this.productId = productId;
-        this.blueprintId = blueprintId;
-        this.receiptId = receiptId;
-        this.invoiceId = invoiceId;
-        this.useByDate = useByDate;
-        this.quantity = quantity;
-        this.location = location;
-    }
-
+    //konstruktor dla dziedziczacych klas (bez productId)
     public Product(int blueprintId, int receiptId, int invoiceId, LocalDate useByDate, int quantity, String location) {
         this.blueprintId = blueprintId;
         this.receiptId = receiptId;
