@@ -1,4 +1,4 @@
-package pb.wi.kck.server;
+package pb.wi.kck.shared;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

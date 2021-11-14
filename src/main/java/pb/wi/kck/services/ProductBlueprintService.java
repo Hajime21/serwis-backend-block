@@ -1,4 +1,4 @@
-package pb.wi.kck.server.services;
+package pb.wi.kck.services;
 
 public class ProductBlueprintService {
 

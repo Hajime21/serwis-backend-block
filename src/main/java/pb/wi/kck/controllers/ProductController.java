@@ -1,10 +1,10 @@
-package pb.wi.kck.server.controllers;
+package pb.wi.kck.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import pb.wi.kck.server.Product;
+import pb.wi.kck.model.Product;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

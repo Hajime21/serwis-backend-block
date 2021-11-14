@@ -1,4 +1,4 @@
-package pb.wi.kck.server.exceptions;
+package pb.wi.kck.exceptions;
 
 public class FoodProductBlueprintNotFoundException extends RuntimeException {
     public FoodProductBlueprintNotFoundException(Integer foodBlueprintId) {

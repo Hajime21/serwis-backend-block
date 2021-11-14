@@ -1,10 +1,10 @@
-package pb.wi.kck.server.controllers;
+package pb.wi.kck.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.server.ProductBlueprint;
-import pb.wi.kck.server.exceptions.ProductBlueprintNotFoundException;
-import pb.wi.kck.server.repositories.ProductBlueprintRepository;
+import pb.wi.kck.model.ProductBlueprint;
+import pb.wi.kck.exceptions.ProductBlueprintNotFoundException;
+import pb.wi.kck.repository.ProductBlueprintRepository;
 
 import java.util.List;
 
