@@ -1,4 +1,4 @@
-package pb.wi.kck.server.dto;
+package pb.wi.kck.dto;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

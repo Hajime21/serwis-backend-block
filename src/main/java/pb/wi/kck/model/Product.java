@@ -1,4 +1,4 @@
-package pb.wi.kck.server;
+package pb.wi.kck.model;
 
 import lombok.Builder;
 import javax.persistence.Entity;

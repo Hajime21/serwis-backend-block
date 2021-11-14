@@ -1,4 +1,4 @@
-package pb.wi.kck.server.exceptions;
+package pb.wi.kck.exceptions;
 
 public class ProductBlueprintNotFoundException extends RuntimeException {
     public ProductBlueprintNotFoundException(Integer blueprintId) {

@@ -1,10 +1,10 @@
-package pb.wi.kck.server.controllers;
+package pb.wi.kck.controllers;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.server.FoodProductBlueprint;
-import pb.wi.kck.server.exceptions.FoodProductBlueprintNotFoundException;
-import pb.wi.kck.server.repositories.FoodProductBlueprintRepository;
+import pb.wi.kck.model.FoodProductBlueprint;
+import pb.wi.kck.exceptions.FoodProductBlueprintNotFoundException;
+import pb.wi.kck.repository.FoodProductBlueprintJpaRepository;
 
 import java.util.List;
 
@@ -12,36 +12,36 @@ import java.util.List;
 @RequestMapping("/api/foodblueprint")
 public class FoodProductBlueprintController {
 
-    private final FoodProductBlueprintRepository foodProductBlueprintRepository;
+    private final FoodProductBlueprintJpaRepository foodProductBlueprintJpaRepository;
 
-    FoodProductBlueprintController(FoodProductBlueprintRepository foodProductBlueprintRepository) {
-        this.foodProductBlueprintRepository = foodProductBlueprintRepository;
+    FoodProductBlueprintController(FoodProductBlueprintJpaRepository foodProductBlueprintJpaRepository) {
+        this.foodProductBlueprintJpaRepository = foodProductBlueprintJpaRepository;
     }
 
     @GetMapping()
     List<FoodProductBlueprint> getAll() {
-        return foodProductBlueprintRepository.findAll();
+        return foodProductBlueprintJpaRepository.findAll();
     }
 
     @PostMapping("/new")
     FoodProductBlueprint newFoodProductBlueprint(@RequestBody FoodProductBlueprint newFoodProductBlueprint) {
-        return foodProductBlueprintRepository.save(newFoodProductBlueprint);
+        return foodProductBlueprintJpaRepository.save(newFoodProductBlueprint);
     }
 
     @GetMapping(value = "/{foodBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
     FoodProductBlueprint getFoodProductBlueprint(@PathVariable Integer foodBlueprintId) {
-        return foodProductBlueprintRepository.findById(foodBlueprintId)
+        return foodProductBlueprintJpaRepository.findById(foodBlueprintId)
                 .orElseThrow(() -> new FoodProductBlueprintNotFoundException(foodBlueprintId));
     }
 
     @DeleteMapping(value = "/{foodBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
     void deleteProductBlueprint(@PathVariable Integer foodBlueprintId) {
-        foodProductBlueprintRepository.deleteById(foodBlueprintId);
+        foodProductBlueprintJpaRepository.deleteById(foodBlueprintId);
     }
 
     @PutMapping(value = "/{foodBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
     FoodProductBlueprint modifyProductBlueprint(@PathVariable Integer foodBlueprintId, @RequestBody FoodProductBlueprint modifiedFoodProductBlueprint) {
-        return foodProductBlueprintRepository.findById(foodBlueprintId)
+        return foodProductBlueprintJpaRepository.findById(foodBlueprintId)
                 .map(pb -> {
                     pb.setName(modifiedFoodProductBlueprint.getName());
                     pb.setBarcode(modifiedFoodProductBlueprint.getBarcode());
@@ -56,11 +56,11 @@ public class FoodProductBlueprintController {
                     pb.setProtein(modifiedFoodProductBlueprint.getProtein());
                     pb.setKcalPer100g(modifiedFoodProductBlueprint.getKcalPer100g());
                     pb.setGrammage(modifiedFoodProductBlueprint.getGrammage());
-                    return foodProductBlueprintRepository.save(pb);
+                    return foodProductBlueprintJpaRepository.save(pb);
                 })
                 .orElseGet(() -> {
                     modifiedFoodProductBlueprint.setBlueprintId(foodBlueprintId);
-                    return foodProductBlueprintRepository.save(modifiedFoodProductBlueprint);
+                    return foodProductBlueprintJpaRepository.save(modifiedFoodProductBlueprint);
                 });
     }
 

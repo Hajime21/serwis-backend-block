@@ -1,22 +1,33 @@
-package pb.wi.kck.server.dto;
+package pb.wi.kck.model;
 
-import lombok.Builder;
-
+import lombok.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Builder(builderMethodName = "productBlueprintDTOBuilder")
-public class ProductBlueprintDTO {
-    protected final int blueprintId;
-    protected final String name;
-    protected final String manufacturer;
-    protected final String barcode;
-    protected final String barcodeType;
-    protected final String description;
-    protected final String imgPath;
-    protected final int targetQuantity;
-    protected final LocalDateTime modificationDate;
+@Builder
+@Entity
+public class ProductBlueprint {
+    //funkcjonalności:
+    //1 - essential, do bazy danych
+    //2 - apka
+    //3 - bajery
+    //4 - dieta
+    //5 - bajery juz ostre
+    protected @Id @GeneratedValue int blueprintId;//1
+    protected String name;                        //1
+    protected String manufacturer;                //2
+    protected String barcode;                     //2
+    protected String barcodeType;                 //2
+    protected String description;                 //3
+    protected String imgPath;                     //3
+    protected int targetQuantity;                 //5
+    protected LocalDateTime modificationDate;     //5
 
-    public ProductBlueprintDTO(int blueprintId, String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, LocalDateTime modificationDate) {
+    public ProductBlueprint() {}
+
+    public ProductBlueprint(int blueprintId, String name, String manufacturer, String barcode, String barcodeType, String description, String imgPath, int targetQuantity, LocalDateTime modificationDate) {
         this.blueprintId = blueprintId;
         this.name = name;
         this.manufacturer = manufacturer;
@@ -32,36 +43,72 @@ public class ProductBlueprintDTO {
         return blueprintId;
     }
 
+    public void setBlueprintId(int blueprintId) {
+        this.blueprintId = blueprintId;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getManufacturer() {
         return manufacturer;
     }
 
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     public String getBarcode() {
         return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getBarcodeType() {
         return barcodeType;
     }
 
+    public void setBarcodeType(String barcodeType) {
+        this.barcodeType = barcodeType;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImgPath() {
         return imgPath;
     }
 
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
     public int getTargetQuantity() {
         return targetQuantity;
     }
 
+    public void setTargetQuantity(int targetQuantity) {
+        this.targetQuantity = targetQuantity;
+    }
+
     public LocalDateTime getModificationDate() {
         return modificationDate;
+    }
+
+    public void setModificationDate(LocalDateTime modificationDate) {
+        this.modificationDate = modificationDate;
     }
 
     @Override
@@ -69,7 +116,7 @@ public class ProductBlueprintDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProductBlueprintDTO that = (ProductBlueprintDTO) o;
+        ProductBlueprint that = (ProductBlueprint) o;
 
         if (blueprintId != that.blueprintId) return false;
         if (targetQuantity != that.targetQuantity) return false;
@@ -98,7 +145,7 @@ public class ProductBlueprintDTO {
 
     @Override
     public String toString() {
-        return "ProductBlueprintDTO{" +
+        return "ProductBlueprint{" +
                 "blueprintId=" + blueprintId +
                 ", name='" + name + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
@@ -110,4 +157,5 @@ public class ProductBlueprintDTO {
                 ", modificationDate=" + modificationDate +
                 '}';
     }
+
 }
