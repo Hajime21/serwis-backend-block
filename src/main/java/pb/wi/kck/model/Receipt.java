@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -19,7 +20,7 @@ import java.util.Objects;
 public class Receipt {
     private @Id @GeneratedValue @NonNull Integer receiptId;
     private float receiptValue;
-    private long purchaseDate;
+    private LocalDate purchaseDate;
     private String shopName;
 
     @Override
