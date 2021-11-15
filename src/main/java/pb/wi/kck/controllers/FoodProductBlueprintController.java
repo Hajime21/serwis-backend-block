@@ -42,21 +42,21 @@ public class FoodProductBlueprintController {
     @PutMapping(value = "/{foodProductBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)
     FoodProductBlueprint modifyFoodProductBlueprint(@PathVariable Integer foodProductBlueprintId, @RequestBody FoodProductBlueprint modifiedFoodProductBlueprint) {
         return foodProductBlueprintJpaRepository.findById(foodProductBlueprintId)
-                .map(pb -> {
-                    pb.setName(modifiedFoodProductBlueprint.getName());
-                    pb.setBarcode(modifiedFoodProductBlueprint.getBarcode());
-                    pb.setBarcodeType(modifiedFoodProductBlueprint.getBarcodeType());
-                    pb.setDescription(modifiedFoodProductBlueprint.getDescription());
-                    pb.setImgPath(modifiedFoodProductBlueprint.getImgPath());
-                    pb.setManufacturer(modifiedFoodProductBlueprint.getManufacturer());
-                    pb.setModificationDate(modifiedFoodProductBlueprint.getModificationDate());
-                    pb.setTargetQuantity(modifiedFoodProductBlueprint.getTargetQuantity());
-                    pb.setCarbohydrates(modifiedFoodProductBlueprint.getCarbohydrates());
-                    pb.setFat(modifiedFoodProductBlueprint.getFat());
-                    pb.setProtein(modifiedFoodProductBlueprint.getProtein());
-                    pb.setKcalPer100g(modifiedFoodProductBlueprint.getKcalPer100g());
-                    pb.setGrammage(modifiedFoodProductBlueprint.getGrammage());
-                    return foodProductBlueprintJpaRepository.save(pb);
+                .map(fpb -> {
+                    fpb.setName(modifiedFoodProductBlueprint.getName());
+                    fpb.setBarcode(modifiedFoodProductBlueprint.getBarcode());
+                    fpb.setBarcodeType(modifiedFoodProductBlueprint.getBarcodeType());
+                    fpb.setDescription(modifiedFoodProductBlueprint.getDescription());
+                    fpb.setImgPath(modifiedFoodProductBlueprint.getImgPath());
+                    fpb.setManufacturer(modifiedFoodProductBlueprint.getManufacturer());
+                    fpb.setModificationDate(modifiedFoodProductBlueprint.getModificationDate());
+                    fpb.setTargetQuantity(modifiedFoodProductBlueprint.getTargetQuantity());
+                    fpb.setCarbohydrates(modifiedFoodProductBlueprint.getCarbohydrates());
+                    fpb.setFat(modifiedFoodProductBlueprint.getFat());
+                    fpb.setProtein(modifiedFoodProductBlueprint.getProtein());
+                    fpb.setKcalPer100g(modifiedFoodProductBlueprint.getKcalPer100g());
+                    fpb.setGrammage(modifiedFoodProductBlueprint.getGrammage());
+                    return foodProductBlueprintJpaRepository.save(fpb);
                 })
                 .orElseGet(() -> {
                     modifiedFoodProductBlueprint.setFoodProductBlueprintId(foodProductBlueprintId);

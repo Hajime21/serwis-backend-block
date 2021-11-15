@@ -1,22 +1,37 @@
 package pb.wi.kck.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor; //?
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @RequiredArgsConstructor
-//@Entity
+@AllArgsConstructor
+@Builder(builderMethodName = "receiptBuilder")
+@Entity(name = "Receipt")
 public class Receipt {
-    @Id private Integer receiptId;
+    private @Id @GeneratedValue @NonNull Integer receiptId;
     private float receiptValue;
     private long purchaseDate;
     private String shopName;
-    private int[] purchasedProductsIds; //tablica productId produktow
-    private float[] productsPrices; //tablica cen odpowiadających tablicy zakupy
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Receipt receipt = (Receipt) o;
+        return receiptId != null && Objects.equals(receiptId, receipt.receiptId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,60 +1,61 @@
 package pb.wi.kck.controllers;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import pb.wi.kck.model.Product;
+import pb.wi.kck.repositories.ProductJpaRepository;
+import pb.wi.kck.server.exceptions.ProductNotFoundException;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/products/generic")
 public class ProductController {
 
-    ConcurrentHashMap<Integer, Product> products = new ConcurrentHashMap<>();
-    Integer liczbaProduktow = 0;
+    private final ProductJpaRepository productJpaRepository;
 
-    //wczytywanie produktow z bazy danych...
-    //aktualizacja liczbyProduktow...
+    ProductController(ProductJpaRepository productJpaRepository) {
+        this.productJpaRepository = productJpaRepository;
+    }
 
+    @GetMapping()
+    List<Product> getAll() {
+        return productJpaRepository.findAll();
+    }
 
     @PostMapping("/new")
-    public Map<String, Integer> postProduct(@RequestBody Product newProduct) {
-        products.put(liczbaProduktow + 1, newProduct);
-        liczbaProduktow++;
-        return Map.of("productId", liczbaProduktow);
+    Product newProduct(@RequestBody Product newProduct) {
+        return productJpaRepository.save(newProduct);
     }
 
     @GetMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Product getProduct(@PathVariable Integer productId) {
-        if(!products.containsKey(productId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie ma produktu o podanym ID.");
-        } else {
-            return products.get(productId);
-        }
+    Product getProduct(@PathVariable Integer productId) {
+        return productJpaRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
     }
 
     @DeleteMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Product deleteProduct(@PathVariable Integer productId) {
-        if(!products.containsKey(productId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie ma produktu o podanym ID.");
-        } else {
-            Product temp = products.get(productId);
-            products.remove(productId);
-            return temp;
-        }
+    void deleteProduct(@PathVariable Integer productId) {
+        productJpaRepository.deleteById(productId);
     }
 
     @PutMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Product modifyProduct(@PathVariable Integer productId, @RequestBody Product modifiedProduct) {
-        if(!products.containsKey(productId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nie ma produktu o podanym ID.");
-        } else {
-            products.put(productId, modifiedProduct);
-            return products.get(productId);
-        }
+    Product modifyProduct(@PathVariable Integer productId, @RequestBody Product modifiedProduct) {
+        return productJpaRepository.findById(productId)
+                .map(p -> {
+                    p.setProductId(modifiedProduct.getProductId());
+                    p.setBlueprintId(modifiedProduct.getBlueprintId());
+                    p.setInvoiceId(modifiedProduct.getInvoiceId());
+                    p.setReceiptId(modifiedProduct.getReceiptId());
+                    p.setLocation(modifiedProduct.getLocation());
+                    p.setUseByDate(modifiedProduct.getUseByDate());
+                    p.setQuantity(modifiedProduct.getQuantity());
+                    return productJpaRepository.save(p);
+                })
+                .orElseGet(() -> {
+                    modifiedProduct.setProductId(productId);
+                    return productJpaRepository.save(modifiedProduct);
+                });
     }
 
 }
