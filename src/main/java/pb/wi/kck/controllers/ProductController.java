@@ -1,62 +1,114 @@
 package pb.wi.kck.controllers;
 
-import org.springframework.http.MediaType;
+import org.modelmapper.ModelMapper;
+import org.springframework.expression.ParseException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pb.wi.kck.dto.ProductDTO;
 import pb.wi.kck.model.Product;
-import pb.wi.kck.repositories.ProductJpaRepository;
-import pb.wi.kck.server.exceptions.ProductNotFoundException;
+import pb.wi.kck.model.ProductBlueprint;
+import pb.wi.kck.services.ProductBlueprintService;
+import pb.wi.kck.services.ProductService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/products/generic")
 public class ProductController {
 
-    private final ProductJpaRepository productJpaRepository;
+    private final ProductService productService;
 
-    ProductController(ProductJpaRepository productJpaRepository) {
-        this.productJpaRepository = productJpaRepository;
+    private final ProductBlueprintService productBlueprintService;
+
+    private final ModelMapper modelMapper;
+
+    ProductController(ProductService productService, ProductBlueprintService productBlueprintService, ModelMapper modelMapper) {
+        this.productService = productService;
+        this.productBlueprintService = productBlueprintService;
+        this.modelMapper = modelMapper;
+    }
+
+    private ProductDTO convertToDto(Product product) {
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+        productDTO.setDependedProductBlueprint(product.getDependedProductBlueprint());
+        //postDto.setSubmissionDate(post.getSubmissionDate(),userService.getCurrentUser().getPreference().getTimezone());
+        return productDTO;
+    }
+
+    private Product convertToEntity(ProductDTO productDTO) throws ParseException {
+        Product product = modelMapper.map(productDTO, Product.class);
+        //productBlueprint.setSubmissionDate(productBlueprintDTO.getSubmissionDateConverted(userService.getCurrentUser().getPreference().getTimezone()));
+
+        if (productDTO.getProductId() != null) {
+            Product oldProduct = productService.getProductById(productDTO.getProductId());
+
+            ProductBlueprint temp = productBlueprintService.getProductBlueprintById( productDTO.getDependedProductBlueprint().getProductBlueprintId());
+            product.setDependedProductBlueprint(temp);
+        }
+        return product;
     }
 
     @GetMapping()
-    List<Product> getAll() {
-        return productJpaRepository.findAll();
+    public List<ProductDTO> getAll() {
+        List<Product> products = productService.getAll();
+        return products.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    @ResponseBody
+    public List<ProductDTO> getProductPage(@PathVariable Integer pageNumber) {
+        List<Product> products = productService.getProductPageList(pageNumber, 33, "ASC", "productId");
+        return products.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/new")
-    Product newProduct(@RequestBody Product newProduct) {
-        return productJpaRepository.save(newProduct);
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public ProductDTO createProduct(@RequestBody ProductDTO productDTO) throws ParseException {
+        Product product = convertToEntity(productDTO);
+        Product productCreated = productService.createProduct(product);
+        return convertToDto(productCreated);
     }
 
-    @GetMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    Product getProduct(@PathVariable Integer productId) {
-        return productJpaRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException(productId));
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
+        Product product = convertToEntity(productDTO);
+        productService.updateProduct(product);
+        return convertToDto(productService.getProductById(id));
     }
 
-    @DeleteMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    void deleteProduct(@PathVariable Integer productId) {
-        productJpaRepository.deleteById(productId);
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProduct(@PathVariable Integer id) {
+        productService.deleteProductById(id);
     }
 
-    @PutMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    Product modifyProduct(@PathVariable Integer productId, @RequestBody Product modifiedProduct) {
-        return productJpaRepository.findById(productId)
-                .map(p -> {
-                    p.setProductId(modifiedProduct.getProductId());
-                    p.setBlueprintId(modifiedProduct.getBlueprintId());
-                    p.setInvoiceId(modifiedProduct.getInvoiceId());
-                    p.setReceiptId(modifiedProduct.getReceiptId());
-                    p.setLocation(modifiedProduct.getLocation());
-                    p.setUseByDate(modifiedProduct.getUseByDate());
-                    p.setQuantity(modifiedProduct.getQuantity());
-                    return productJpaRepository.save(p);
-                })
-                .orElseGet(() -> {
-                    modifiedProduct.setProductId(productId);
-                    return productJpaRepository.save(modifiedProduct);
-                });
-    }
+
+
+//    @PutMapping(value = "/{productId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    Product modifyProduct(@PathVariable Integer productId, @RequestBody Product modifiedProduct) {
+//        return productJpaRepository.findById(productId)
+//                .map(p -> {
+//                    p.setProductId(modifiedProduct.getProductId());
+//                    p.setDependedProductBlueprint(modifiedProduct.getDependedProductBlueprint());
+//                    p.setInvoiceId(modifiedProduct.getInvoiceId());
+//                    p.setReceiptId(modifiedProduct.getReceiptId());
+//                    p.setLocation(modifiedProduct.getLocation());
+//                    p.setUseByDate(modifiedProduct.getUseByDate());
+//                    p.setQuantity(modifiedProduct.getQuantity());
+//                    return productJpaRepository.save(p);
+//                })
+//                .orElseGet(() -> {
+//                    modifiedProduct.setProductId(productId);
+//                    return productJpaRepository.save(modifiedProduct);
+//                });
+//    }
 
 }
 

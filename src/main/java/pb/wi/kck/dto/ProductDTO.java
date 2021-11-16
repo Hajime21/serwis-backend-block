@@ -1,21 +1,25 @@
-package pb.wi.kck.server.dto;
+package pb.wi.kck.dto;
 
 import lombok.*;
+import pb.wi.kck.model.ProductBlueprint;
 
 import java.time.LocalDate;
 
-@Getter
+@Data
+//@Getter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder(builderMethodName = "productDTOBuilder")
 public class ProductDTO {
-    protected final int productId;
-    protected final int blueprintId;
-    protected final int receiptId;
-    protected final int invoiceId;
-    protected final LocalDate useByDate;
-    protected final int quantity; //czy na pewno?
-    protected final String location;
+    protected Integer productId;
+    //protected int blueprintId;
+    protected int receiptId;
+    protected int invoiceId;
+    protected LocalDate useByDate;
+    protected int quantity; //czy na pewno?
+    protected String location;
+    protected ProductBlueprint dependedProductBlueprint;
 
 }

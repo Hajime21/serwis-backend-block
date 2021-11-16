@@ -6,7 +6,7 @@ plugins {
 
 group = 'pb.wi.kck'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = "16"
 
 configurations {
     compileOnly {
@@ -24,7 +24,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-core'
     implementation 'org.hibernate:hibernate-entitymanager'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
+    implementation 'org.modelmapper:modelmapper:2.3.5'
     //implementation 'javax.xml.bind:jaxb-api'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -37,3 +37,4 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+targetCompatibility = JavaVersion.VERSION_16

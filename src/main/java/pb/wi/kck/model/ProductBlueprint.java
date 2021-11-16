@@ -3,19 +3,20 @@ package pb.wi.kck.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder(builderMethodName = "productBlueprintBuilder")
+@Table(name = "PRODUCT_BLUEPRINT")
 @Entity(name = "ProductBlueprint")
 public class ProductBlueprint {
     //funkcjonalności:
@@ -24,7 +25,8 @@ public class ProductBlueprint {
     //3 - bajery
     //4 - dieta
     //5 - bajery juz ostre
-    protected @Id @GeneratedValue @NonNull Integer productBlueprintId;//1
+    protected @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer productBlueprintId;                   //1
     protected String name;                        //1
     protected String manufacturer;                //2
     protected String barcode;                     //2
@@ -34,16 +36,22 @@ public class ProductBlueprint {
     protected int targetQuantity;                 //5
     protected LocalDateTime modificationDate;     //5
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ProductBlueprint that = (ProductBlueprint) o;
-        return productBlueprintId != null && Objects.equals(productBlueprintId, that.productBlueprintId);
-    }
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "dependedProductBlueprint", cascade = CascadeType.ALL) //, orphanRemoval = true)
+    protected List<Product> dependingProducts;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+//        ProductBlueprint that = (ProductBlueprint) o;
+//        return productBlueprintId != null && Objects.equals(productBlueprintId, that.productBlueprintId);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return getClass().hashCode();
+//    }
+
 }
