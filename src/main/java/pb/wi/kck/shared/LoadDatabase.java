@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pb.wi.kck.model.Product;
 import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.repositories.ProductBlueprintJpaRepository;
 import pb.wi.kck.repositories.ProductJpaRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Configuration
@@ -19,38 +21,42 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(ProductBlueprintJpaRepository repository1, ProductJpaRepository repository2) {
         return args -> {
-            var pb = new ProductBlueprint(1,"Domestos 1L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            var pb = new ProductBlueprint(1,"Domestos 1L","UNILEVER","8717163350034","EAN-13","Usuwa kase","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(2,"Domestos 2L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(2,"4Move Vitamin Water","FOODCARE","5900552077756","EAN-13","Woda smakowa","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(3,"Domestos 3L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(3,"Chappi z drobiem","MARS PC","5900951252815","PDF417","Karma pełnoporcjowa","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(4,"Domestos 4L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(4,"Coca-Cola","Coca-Cola Company","5000112529043","GTIN-13","Pyszny trunek","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(5,"Domestos 5L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(5,"MYDŁO/PŁ SILK POMPKA 250ML","DOVE","8717163605776","EAN-13","Mydlo do mycia rąk","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(6,"Domestos 6L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(6,"SEREK KREMOWY SZPINAK 150G","HOCHLAND","5902899139470","EAN-13","Serek sniadaniowy","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(7,"Domestos 7L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(7,"Woda Mineralna","NESTLE WAT","5900635000015","EAN-13","Woda pitna","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(8,"Domestos 8L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(8,"KISIEL","FOODCARE","5900552012238","EAN-13","Kisielek","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(9,"Domestos 9L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(9,"TAFT LAKIER/WŁ","HENKEL&SCH","4012800706002","PDF417","Lakier do wlosow","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(10,"Domestos 10L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(10,"NESTLE PŁATKI","PACIFIC","5900020004659","Data Matrix","Platki sniadaniowe","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(11,"Domestos 11L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(11,"BOBOVITA Zupa Dyniowa","NUTRICIA","5900852033766","UPC","Zupa z dyni","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
-            pb = new ProductBlueprint(12,"Domestos 12L","Clean","","","Usuwa kase","",1, LocalDateTime.now(), null);
+            pb = new ProductBlueprint(12,"7UP","PEPSICO","5900497340502","EAN-13","Napoj gazowany","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
 
 
-            //var p = new Product(1, 0, 0, LocalDate.now(), 1, "polka b", pb);
-            //log.info("Preloading " + repository2.save(p));
-            /*log.info("Preloading " + repository.save(new ProductBlueprint.ProductBlueprintBuilder()
+
+            /*
+            var p = new Product(1, 0, 0, LocalDate.now(), 100, "polka b", pb);
+            log.info("Preloading " + repository2.save(p));
+            log.info("Preloading " + repository2.save(new ProductBlueprint.ProductBlueprintBuilder()
                     .name("Dettoll Plyn do podlog")
                     .manufacturer("Dettoll")
-                    .build()));*/
+                    .build()));
+
+             */
         };
     }
 
