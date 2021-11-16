@@ -46,7 +46,16 @@ public class LoadDatabase {
             pb = new ProductBlueprint(12,"7UP","PEPSICO","5900497340502","EAN-13","Napoj gazowany","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
 
-
+            var p = new Product(1, 0, 0, LocalDate.of(2023, 2, 18), 1, "Półka B", repository1.getById(4));
+            log.info("Preloading "+ repository2.save(p));
+            p = new Product(2, 0, 0, LocalDate.of(2023, 5, 8), 10, "Półka B", repository1.getById(2));
+            log.info("Preloading "+ repository2.save(p));
+            p = new Product(3, 0, 0, LocalDate.of(2022, 3, 16), 3, "Półka A", repository1.getById(11));
+            log.info("Preloading "+ repository2.save(p));
+            p = new Product(4, 0, 0, LocalDate.of(2027, 1, 12), 12, "Półka B", repository1.getById(7));
+            log.info("Preloading "+ repository2.save(p));
+            p = new Product(5, 0, 0, LocalDate.of(2024, 6, 3), 5, "Półka C", repository1.getById(8));
+            log.info("Preloading "+ repository2.save(p));
 
             /*
             var p = new Product(1, 0, 0, LocalDate.now(), 100, "polka b", pb);
