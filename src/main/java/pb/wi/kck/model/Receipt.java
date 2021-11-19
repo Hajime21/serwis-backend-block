@@ -18,10 +18,10 @@ import java.util.Objects;
 @Builder(builderMethodName = "receiptBuilder")
 @Entity(name = "Receipt")
 public class Receipt {
-    private @Id @GeneratedValue @NonNull Integer receiptId;
-    private float receiptValue;
-    private LocalDate purchaseDate;
-    private String shopName;
+    private @Id @GeneratedValue @NonNull Integer receiptId; //number
+    private float receiptValue; //number
+    private LocalDate purchaseDate; //date
+    private String shopName; //varchar
 
     @Override
     public boolean equals(Object o) {

@@ -18,9 +18,12 @@ public class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
+
     @Bean
     CommandLineRunner initDatabase(ProductBlueprintJpaRepository repository1, ProductJpaRepository repository2) {
         return args -> {
+            log.info("siema witam");
+            /*
             var pb = new ProductBlueprint(1,"Domestos 1L","UNILEVER","8717163350034","EAN-13","Usuwa kase","",1, LocalDateTime.now(), null);
             log.info("Preloading " + repository1.save(pb));
             pb = new ProductBlueprint(2,"4Move Vitamin Water","FOODCARE","5900552077756","EAN-13","Woda smakowa","",1, LocalDateTime.now(), null);
