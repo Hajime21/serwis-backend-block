@@ -17,7 +17,7 @@ import java.util.Objects;
 public class AlcoholProduct {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer alcoholProductId;
     private int quantity;
-    private float voltage;
+    private int voltage;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
