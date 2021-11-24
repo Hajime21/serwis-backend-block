@@ -5,8 +5,8 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -15,20 +15,19 @@ import java.util.Objects;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "receiptBuilder")
-@Entity(name = "Receipt")
-public class Receipt {
-    private @Id @GeneratedValue @NonNull Integer receiptId;
-    private float receiptValue;
-    private LocalDate purchaseDate;
-    private String shopName;
+@Builder(builderMethodName = "foodProductClassBuilder")
+@Entity
+public class FoodProductClass {
+    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductClassId;
+    private String foodProductClassName;
+    private int desiredQuantity;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Receipt receipt = (Receipt) o;
-        return receiptId != null && Objects.equals(receiptId, receipt.receiptId);
+        FoodProductClass that = (FoodProductClass) o;
+        return foodProductClassId != null && Objects.equals(foodProductClassId, that.foodProductClassId);
     }
 
     @Override

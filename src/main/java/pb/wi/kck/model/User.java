@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
@@ -14,22 +15,20 @@ import java.util.Objects;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "invoiceBuilder")
-@Entity(name = "Invoice")
-public class Invoice {
-    private @Id @GeneratedValue @NonNull Integer invoiceId;
-    private String invoiceName;
-    private int sellerNIP;
-    private int buyerNIP;
-    private float invoiceValue;
-    private long purchaseDate;
+@Builder(builderMethodName = "userBuilder")
+@Entity
+public class User {
+    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer userId;
+    private String login;
+    private String password;
+    private String email;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Invoice invoice = (Invoice) o;
-        return invoiceId != null && Objects.equals(invoiceId, invoice.invoiceId);
+        User user = (User) o;
+        return userId != null && Objects.equals(userId, user.userId);
     }
 
     @Override
@@ -37,3 +36,4 @@ public class Invoice {
         return getClass().hashCode();
     }
 }
+

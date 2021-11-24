@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.hibernate:hibernate-entitymanager'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.modelmapper:modelmapper:2.3.5'
+    implementation 'com.h2database:h2'
     //implementation 'javax.xml.bind:jaxb-api'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

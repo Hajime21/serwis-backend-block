@@ -4,26 +4,27 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Data
+//@Getter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "foodProductBlueprintDTOBuilder")
+@Builder(builderMethodName = "foodProductBlueprintDtoBuilder")
 public class FoodProductBlueprintDTO {
-    protected final int blueprintId;
-    protected final String name;
-    protected final String manufacturer;
-    protected final String barcode;
-    protected final String barcodeType;
-    protected final String description;
-    protected final String imgPath;
-    protected final int targetQuantity;
-    protected final LocalDateTime modificationDate;
-    protected final int grammage;
-    protected final int kcalPer100g;
-    protected final int protein;
-    protected final int fat;
-    protected final int carbohydrates;
-    protected final int productPackage;
+    private Integer foodProductBlueprintId;
+    private Integer foodProductClassId;
+    private String name;
+    private String manufacturer;
+    private String barcode;
+    private String barcodeType;
+    private String description;
+    private String imgPath;
+    private LocalDateTime modificationDate;
+    private int measuredValue;
+    private int kcalPer100;
+    private int protein;
+    private int fat;
+    private int carbohydrates;
 
 }

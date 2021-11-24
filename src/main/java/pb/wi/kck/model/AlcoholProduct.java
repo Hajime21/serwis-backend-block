@@ -4,7 +4,6 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Getter
@@ -13,16 +12,16 @@ import java.util.Objects;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "productBuilder")
+@Builder(builderMethodName = "alcoholProductBuilder")
 @Entity
-public class Product {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer productId;
-    private LocalDate useByDate;
+public class AlcoholProduct {
+    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer alcoholProductId;
     private int quantity;
+    private float voltage;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "PRODUCT_BLUEPRINT_ID", nullable = false)
-    private ProductBlueprint productBlueprint;
+    @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
+    private FoodProductBlueprint foodProductBlueprint;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "DEAL_ID", nullable = false)
@@ -36,13 +35,12 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Product product = (Product) o;
-        return productId != null && Objects.equals(productId, product.productId);
+        AlcoholProduct that = (AlcoholProduct) o;
+        return alcoholProductId != null && Objects.equals(alcoholProductId, that.alcoholProductId);
     }
 
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }

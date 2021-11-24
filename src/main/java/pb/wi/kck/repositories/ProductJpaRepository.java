@@ -9,7 +9,6 @@ import pb.wi.kck.model.Product;
 
 @Repository
 public interface ProductJpaRepository extends JpaRepository<Product, Integer>, PagingAndSortingRepository<Product, Integer> {
-    //@Query("select * from ProductBlueprint u")
     Page<Product> findAll(Pageable pageReq);
 }
 

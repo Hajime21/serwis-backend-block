@@ -1,21 +1,22 @@
-package pb.wi.kck.server.dto;
+package pb.wi.kck.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Data
+//@Getter
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "foodProductDTOBuilder")
+@Builder(builderMethodName = "foodProductDtoBuilder")
 public class FoodProductDTO {
-    protected final int foodProductId;
-    protected final int blueprintId;
-    protected final int receiptId;
-    protected final int invoiceId;
-    protected final LocalDate useByDate;
-    protected final int quantity; //czy na pewno?
-    protected final String location;
+    private Integer foodProductId;
+    private Integer foodProductBlueprintId;
+    private Integer dealId;
+    private Integer locationId;
+    private LocalDate useByDate;
+    private int quantity;
 
 }

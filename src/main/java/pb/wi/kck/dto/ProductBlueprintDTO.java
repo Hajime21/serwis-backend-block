@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "productBlueprintDTOBuilder")
+@Builder(builderMethodName = "productBlueprintDtoBuilder")
 public class ProductBlueprintDTO {
     protected Integer productBlueprintId;
     protected String name;
@@ -21,8 +21,6 @@ public class ProductBlueprintDTO {
     protected String barcodeType;
     protected String description;
     protected String imgPath;
-    protected int targetQuantity;
     protected LocalDateTime modificationDate;
-    protected List<Product> dependingProducts;
 
 }

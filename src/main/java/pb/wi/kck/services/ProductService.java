@@ -20,11 +20,9 @@ public class ProductService { //implements ProductBlueprintService {
         this.productJpaRepository = productJpaRepository;
     }
 
-
     public Product getProductById(Integer id) {
         return productJpaRepository.getById(id);
     }
-
 
     public Product createProduct(Product product) {
         return productJpaRepository.save(product);

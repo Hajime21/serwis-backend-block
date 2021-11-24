@@ -11,15 +11,14 @@ import java.time.LocalDate;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "productDTOBuilder")
+@Builder(builderMethodName = "productDtoBuilder")
 public class ProductDTO {
-    protected Integer productId;
-    //protected int blueprintId;
-    protected int receiptId;
-    protected int invoiceId;
-    protected LocalDate useByDate;
-    protected int quantity; //czy na pewno?
-    protected String location;
-    protected ProductBlueprint dependedProductBlueprint;
+    private Integer productId;
+    private Integer productBlueprintId;
+    private Integer dealId;
+    private Integer locationId;
+    private LocalDate useByDate;
+    private int quantity;
+    //private ProductBlueprint dependedProductBlueprint;
 
 }

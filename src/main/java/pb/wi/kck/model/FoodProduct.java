@@ -3,9 +3,7 @@ package pb.wi.kck.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -16,15 +14,23 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder(builderMethodName = "foodProductBuilder")
-@Entity(name = "FoodProduct")
+@Entity
 public class FoodProduct {
-    private @Id @GeneratedValue @NonNull Integer foodProductId;
-    protected Integer blueprintId;
-    protected Integer receiptId;
-    protected Integer invoiceId;
-    protected LocalDate useByDate;
-    protected int quantity; //czy na pewno?
-    protected String location;
+    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductId;
+    private LocalDate useByDate;
+    private int quantity;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
+    private FoodProductBlueprint foodProductBlueprint;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "DEAL_ID", nullable = false)
+    private Deal deal;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "LOCATION_ID", nullable = false)
+    private Location location;
 
     @Override
     public boolean equals(Object o) {

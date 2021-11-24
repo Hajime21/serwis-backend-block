@@ -3,9 +3,7 @@ package pb.wi.kck.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -16,23 +14,26 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder(builderMethodName = "foodProductBlueprintBuilder")
-@Entity(name = "FoodProductBlueprint")
+@Entity
 public class FoodProductBlueprint {
-    protected @Id @GeneratedValue @NonNull Integer foodProductBlueprintId;
-    protected String name;                        //1
-    protected String manufacturer;                //2
-    protected String barcode;                     //2
-    protected String barcodeType;                 //2
-    protected String description;                 //3
-    protected String imgPath;                     //3
-    protected int targetQuantity;                 //5
-    protected LocalDateTime modificationDate;     //5
-    protected int grammage;                       //4
-    protected int kcalPer100g;                    //4
-    protected int protein;                        //4
-    protected int fat;                            //4
-    protected int carbohydrates;                  //4
-    protected int productPackage;                 //5
+    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductBlueprintId;
+    private String name;
+    private String manufacturer;
+    private String barcode;
+    private String barcodeType;
+    private String description;
+    //private String ingredients;
+    private String imgPath;
+    private LocalDateTime modificationDate;
+    private int measuredValue;
+    private int kcalPer100;
+    private int protein;
+    private int fat;
+    private int carbohydrates;
+
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID", nullable = false)
+    private FoodProductClass foodProductClass;
 
     @Override
     public boolean equals(Object o) {
