@@ -1,16 +1,15 @@
 package pb.wi.kck.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.dto.ProductBlueprintDTO;
-import pb.wi.kck.model.Product;
+import pb.wi.kck.dto.ProductBlueprintDto;
 import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.services.ProductBlueprintService;
 import pb.wi.kck.services.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,35 +27,41 @@ public class ProductBlueprintController {
         this.productService = productService;
         this.productBlueprintService = productBlueprintService;
         this.modelMapper = modelMapper;
+        this.modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setDestinationNamingConvention(LombokBuilderNamingConvention.INSTANCE)
+                .setDestinationNameTransformer(LombokBuilderNameTransformer.INSTANCE);
     }
 
-    private ProductBlueprintDTO convertToDto(ProductBlueprint productBlueprint) {
-        ProductBlueprintDTO productBlueprintDTO = modelMapper.map(productBlueprint, ProductBlueprintDTO.class);
-        productBlueprintDTO.setDependingProducts(null);
+    private ProductBlueprintDto convertToDto(ProductBlueprint productBlueprint) {
+        ProductBlueprintDto productBlueprintDTO = modelMapper.map(productBlueprint, ProductBlueprintDto.ProductBlueprintDtoBuilder.class).build();
+        System.out.println("-------- PRODUCTBLUEPRINT DO ZMAPOWANIA ------");
+        System.out.println(productBlueprint);
+        System.out.println("-------- ZMAPOWANE DTO PRODUCTBLUEPRINTU ------");
+        System.out.println(productBlueprintDTO);
+        //productBlueprintDTO.setDependingProducts(null);
         //postDto.setSubmissionDate(post.getSubmissionDate(),userService.getCurrentUser().getPreference().getTimezone());
         return productBlueprintDTO;
     }
 
-    private ProductBlueprint convertToEntity(ProductBlueprintDTO productBlueprintDTO) throws ParseException {
-        ProductBlueprint productBlueprint = modelMapper.map(productBlueprintDTO, ProductBlueprint.class);
+    private ProductBlueprint convertToEntity(ProductBlueprintDto productBlueprintDto) throws ParseException {
+        ProductBlueprint productBlueprint = modelMapper.map(productBlueprintDto, ProductBlueprint.ProductBlueprintBuilder.class).build();
         //productBlueprint.setSubmissionDate(productBlueprintDTO.getSubmissionDateConverted(userService.getCurrentUser().getPreference().getTimezone()));
+        System.out.println("======== DTO PRODUCTBLUEPRINTU DO ZMAPOWANIA ======");
+        System.out.println(productBlueprintDto);
+        System.out.println("======== ZMAPOWANY PRODUCTBLUEPRINT ======");
+        System.out.println(productBlueprint);
 
-        if (productBlueprintDTO.getProductBlueprintId() != null) {
-            ProductBlueprint oldProductBlueprint = productBlueprintService.getProductBlueprintById(productBlueprintDTO.getProductBlueprintId());
-
-            ArrayList<Product> tempProducts = new ArrayList<>();
-            for (var product : oldProductBlueprint.getDependingProducts()) {
-                tempProducts.add(Product.productBuilder().productId(product.getProductId()).build());
-            }
-
-            productBlueprint.setDependingProducts(tempProducts.stream().toList());
+        if (productBlueprintDto.getProductBlueprintId() != null) {
+            ProductBlueprint oldProductBlueprint = productBlueprintService.getById(productBlueprintDto.getProductBlueprintId());
+            System.out.println("CHUJ");
             //post.setSent(oldPost.isSent());
         }
         return productBlueprint;
     }
 
     @GetMapping()
-    public List<ProductBlueprintDTO> getAll() {
+    public List<ProductBlueprintDto> getAll() {
         List<ProductBlueprint> productBlueprints = productBlueprintService.getAll();
         return productBlueprints.stream()
                 .map(this::convertToDto)
@@ -65,8 +70,8 @@ public class ProductBlueprintController {
 
     @GetMapping("/page/{pageNumber}")
     @ResponseBody
-    public List<ProductBlueprintDTO> getProductBlueprintsPage(@PathVariable Integer pageNumber) {
-        List<ProductBlueprint> posts = productBlueprintService.getProductBlueprintPageList(pageNumber, 33, "ASC", "productBlueprintId");
+    public List<ProductBlueprintDto> getProductBlueprintsPage(@PathVariable Integer pageNumber) {
+        List<ProductBlueprint> posts = productBlueprintService.getPageList(pageNumber, 33, "ASC", "productBlueprintId");
         return posts.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -75,30 +80,30 @@ public class ProductBlueprintController {
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public ProductBlueprintDTO createProductBlueprint(@RequestBody ProductBlueprintDTO productBlueprintDTO) throws ParseException {
+    public ProductBlueprintDto createProductBlueprint(@RequestBody ProductBlueprintDto productBlueprintDTO) throws ParseException {
         ProductBlueprint productBlueprint = convertToEntity(productBlueprintDTO);
-        ProductBlueprint productBlueprintCreated = productBlueprintService.createProductBlueprint(productBlueprint);
+        ProductBlueprint productBlueprintCreated = productBlueprintService.create(productBlueprint);
         return convertToDto(productBlueprintCreated);
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public ProductBlueprintDTO getProductBlueprint(@PathVariable Integer id) {
-        return convertToDto(productBlueprintService.getProductBlueprintById(id));
+    public ProductBlueprintDto getProductBlueprint(@PathVariable Integer id) {
+        return convertToDto(productBlueprintService.getById(id));
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductBlueprintDTO updateProductBlueprint(@RequestBody ProductBlueprintDTO productBlueprintDTO, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
+    public ProductBlueprintDto updateProductBlueprint(@RequestBody ProductBlueprintDto productBlueprintDTO, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
         ProductBlueprint productBlueprint = convertToEntity(productBlueprintDTO);
-        productBlueprintService.updateProductBlueprint(productBlueprint);
-        return convertToDto(productBlueprintService.getProductBlueprintById(id));
+        productBlueprintService.update(productBlueprint);
+        return convertToDto(productBlueprintService.getById(id));
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProductBlueprint(@PathVariable Integer id) {
-        productBlueprintService.deleteProductBlueprintById(id);
+        productBlueprintService.deleteById(id);
     }
 
 

@@ -5,47 +5,49 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pb.wi.kck.model.Product;
-import pb.wi.kck.repositories.ProductJpaRepository;
+import pb.wi.kck.model.Address;
+import pb.wi.kck.model.FoodProductBlueprint;
+import pb.wi.kck.repositories.AddressJpaRepository;
+import pb.wi.kck.repositories.FoodProductBlueprintJpaRepository;
 
 import java.util.List;
 
 @Service
-public class ProductService { //implements ProductBlueprintService {
+public class AddressService { //implements ProductBlueprintService {
 
-    private final ProductJpaRepository productJpaRepository;
+    private final AddressJpaRepository addressJpaRepository;
 
     @Autowired
-    public ProductService(ProductJpaRepository productJpaRepository) {
-        this.productJpaRepository = productJpaRepository;
+    public AddressService(AddressJpaRepository addressJpaRepository) {
+        this.addressJpaRepository = addressJpaRepository;
     }
 
-    public Product getById(Integer id) {
-        return productJpaRepository.getById(id);
+    public Address getById(Integer id) {
+        return addressJpaRepository.getById(id);
     }
 
-    public Product create(Product product) {
-        return productJpaRepository.save(product);
+    public Address create(Address address) {
+        return addressJpaRepository.save(address);
     }
 
-    public void update(Product product) {
-        productJpaRepository.save(product);
+    public void update(Address address) {
+        addressJpaRepository.save(address);
     }
 
-    public List<Product> getAll() {
-        List<Product> products = productJpaRepository.findAll();
-        return products;
+    public List<Address> getAll() {
+        List<Address> addresses = addressJpaRepository.findAll();
+        return addresses;
     }
 
-    public List<Product> getPageList(int page, int size, String sortDir, String sort) {
+    public List<Address> getPageList(int page, int size, String sortDir, String sort) {
         PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
 
-        Page<Product> products = productJpaRepository.findAll(pageReq);
-        return products.getContent();
+        Page<Address> respondedPage = addressJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
     }
 
     public void deleteById(Integer id) {
-        productJpaRepository.deleteById(id);
+        addressJpaRepository.deleteById(id);
     }
 
 

@@ -5,47 +5,47 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pb.wi.kck.model.Product;
-import pb.wi.kck.repositories.ProductJpaRepository;
+import pb.wi.kck.model.Location;
+import pb.wi.kck.repositories.LocationJpaRepository;
 
 import java.util.List;
 
 @Service
-public class ProductService { //implements ProductBlueprintService {
+public class LocationService { //implements ProductBlueprintService {
 
-    private final ProductJpaRepository productJpaRepository;
+    private final LocationJpaRepository locationJpaRepository;
 
     @Autowired
-    public ProductService(ProductJpaRepository productJpaRepository) {
-        this.productJpaRepository = productJpaRepository;
+    public LocationService(LocationJpaRepository locationJpaRepository) {
+        this.locationJpaRepository = locationJpaRepository;
     }
 
-    public Product getById(Integer id) {
-        return productJpaRepository.getById(id);
+    public Location getById(Integer id) {
+        return locationJpaRepository.getById(id);
     }
 
-    public Product create(Product product) {
-        return productJpaRepository.save(product);
+    public Location create(Location location) {
+        return locationJpaRepository.save(location);
     }
 
-    public void update(Product product) {
-        productJpaRepository.save(product);
+    public void update(Location location) {
+        locationJpaRepository.save(location);
     }
 
-    public List<Product> getAll() {
-        List<Product> products = productJpaRepository.findAll();
-        return products;
+    public List<Location> getAll() {
+        List<Location> locations = locationJpaRepository.findAll();
+        return locations;
     }
 
-    public List<Product> getPageList(int page, int size, String sortDir, String sort) {
+    public List<Location> getPageList(int page, int size, String sortDir, String sort) {
         PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
 
-        Page<Product> products = productJpaRepository.findAll(pageReq);
-        return products.getContent();
+        Page<Location> respondedPage = locationJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
     }
 
     public void deleteById(Integer id) {
-        productJpaRepository.deleteById(id);
+        locationJpaRepository.deleteById(id);
     }
 
 

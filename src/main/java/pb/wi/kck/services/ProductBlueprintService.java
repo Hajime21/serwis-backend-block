@@ -20,17 +20,15 @@ public class ProductBlueprintService { //implements ProductBlueprintService {
         this.productBlueprintJpaRepository = productBlueprintJpaRepository;
     }
 
-
-    public ProductBlueprint getProductBlueprintById(Integer id) {
+    public ProductBlueprint getById(Integer id) {
         return productBlueprintJpaRepository.getById(id);
     }
 
-
-    public ProductBlueprint createProductBlueprint(ProductBlueprint productBlueprint) {
+    public ProductBlueprint create(ProductBlueprint productBlueprint) {
         return productBlueprintJpaRepository.save(productBlueprint);
     }
 
-    public void updateProductBlueprint(ProductBlueprint productBlueprint) {
+    public void update(ProductBlueprint productBlueprint) {
         productBlueprintJpaRepository.save(productBlueprint);
     }
 
@@ -39,14 +37,14 @@ public class ProductBlueprintService { //implements ProductBlueprintService {
         return productBlueprints;
     }
 
-    public List<ProductBlueprint> getProductBlueprintPageList(int page, int size, String sortDir, String sort) {
+    public List<ProductBlueprint> getPageList(int page, int size, String sortDir, String sort) {
         PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
 
-        Page<ProductBlueprint> productBlueprints = productBlueprintJpaRepository.findAll(pageReq);
-        return productBlueprints.getContent();
+        Page<ProductBlueprint> respondedPage = productBlueprintJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
     }
 
-    public void deleteProductBlueprintById(Integer id) {
+    public void deleteById(Integer id) {
         productBlueprintJpaRepository.deleteById(id);
     }
 

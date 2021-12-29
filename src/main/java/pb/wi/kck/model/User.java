@@ -13,9 +13,9 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "userBuilder")
+@Builder
 @Entity
 public class User {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer userId;

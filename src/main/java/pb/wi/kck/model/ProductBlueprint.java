@@ -13,9 +13,9 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "productBlueprintBuilder")
+@Builder
 @Entity
 public class ProductBlueprint {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer productBlueprintId;

@@ -11,9 +11,9 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "productBuilder")
+@Builder
 @Entity
 public class Product {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer productId;

@@ -12,9 +12,9 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "dealBuilder")
+@Builder
 @Entity
 public class Deal {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer dealId;

@@ -10,7 +10,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder(builderMethodName = "alcoholProductBuilder")
 @Entity

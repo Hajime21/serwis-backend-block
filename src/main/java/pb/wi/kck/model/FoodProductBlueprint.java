@@ -11,16 +11,16 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "foodProductBlueprintBuilder")
+@Builder
 @Entity
 public class FoodProductBlueprint {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductBlueprintId;
     private String name;
     private String manufacturer;
-    private String barcode;
-    private String barcodeType;
+    //private String barcode;
+    //private String barcodeType;
     private String description;
     //private String ingredients;
     private String imgPath;

@@ -5,47 +5,47 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pb.wi.kck.model.Product;
-import pb.wi.kck.repositories.ProductJpaRepository;
+import pb.wi.kck.model.FoodProductClass;
+import pb.wi.kck.repositories.FoodProductClassJpaRepository;
 
 import java.util.List;
 
 @Service
-public class ProductService { //implements ProductBlueprintService {
+public class FoodProductClassService { //implements ProductBlueprintService {
 
-    private final ProductJpaRepository productJpaRepository;
+    private final FoodProductClassJpaRepository foodProductClassJpaRepository;
 
     @Autowired
-    public ProductService(ProductJpaRepository productJpaRepository) {
-        this.productJpaRepository = productJpaRepository;
+    public FoodProductClassService(FoodProductClassJpaRepository foodProductClassJpaRepository) {
+        this.foodProductClassJpaRepository = foodProductClassJpaRepository;
     }
 
-    public Product getById(Integer id) {
-        return productJpaRepository.getById(id);
+    public FoodProductClass getById(Integer id) {
+        return foodProductClassJpaRepository.getById(id);
     }
 
-    public Product create(Product product) {
-        return productJpaRepository.save(product);
+    public FoodProductClass create(FoodProductClass foodProductClass) {
+        return foodProductClassJpaRepository.save(foodProductClass);
     }
 
-    public void update(Product product) {
-        productJpaRepository.save(product);
+    public void update(FoodProductClass foodProductClass) {
+        foodProductClassJpaRepository.save(foodProductClass);
     }
 
-    public List<Product> getAll() {
-        List<Product> products = productJpaRepository.findAll();
-        return products;
+    public List<FoodProductClass> getAll() {
+        List<FoodProductClass> foodProductClasses = foodProductClassJpaRepository.findAll();
+        return foodProductClasses;
     }
 
-    public List<Product> getPageList(int page, int size, String sortDir, String sort) {
+    public List<FoodProductClass> getPageList(int page, int size, String sortDir, String sort) {
         PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
 
-        Page<Product> products = productJpaRepository.findAll(pageReq);
-        return products.getContent();
+        Page<FoodProductClass> respondedPage = foodProductClassJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
     }
 
     public void deleteById(Integer id) {
-        productJpaRepository.deleteById(id);
+        foodProductClassJpaRepository.deleteById(id);
     }
 
 

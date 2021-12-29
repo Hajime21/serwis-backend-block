@@ -13,9 +13,9 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder(builderMethodName = "locationBuilder")
+@Builder
 @Entity
 public class Location {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer locationId;

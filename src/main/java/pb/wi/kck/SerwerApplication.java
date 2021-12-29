@@ -17,11 +17,6 @@ public class SerwerApplication {
         return LocalDateTime.now().atZone(zoneId).toEpochSecond();
     }
 
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    public Server h2Server() throws SQLException {
-        return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "2115");
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(SerwerApplication.class, args);
         

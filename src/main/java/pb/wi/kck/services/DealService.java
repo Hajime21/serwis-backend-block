@@ -5,47 +5,47 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pb.wi.kck.model.Product;
-import pb.wi.kck.repositories.ProductJpaRepository;
+import pb.wi.kck.model.Deal;
+import pb.wi.kck.repositories.DealJpaRepository;
 
 import java.util.List;
 
 @Service
-public class ProductService { //implements ProductBlueprintService {
+public class DealService { //implements ProductBlueprintService {
 
-    private final ProductJpaRepository productJpaRepository;
+    private final DealJpaRepository dealJpaRepository;
 
     @Autowired
-    public ProductService(ProductJpaRepository productJpaRepository) {
-        this.productJpaRepository = productJpaRepository;
+    public DealService(DealJpaRepository dealJpaRepository) {
+        this.dealJpaRepository = dealJpaRepository;
     }
 
-    public Product getById(Integer id) {
-        return productJpaRepository.getById(id);
+    public Deal getById(Integer id) {
+        return dealJpaRepository.getById(id);
     }
 
-    public Product create(Product product) {
-        return productJpaRepository.save(product);
+    public Deal create(Deal deal) {
+        return dealJpaRepository.save(deal);
     }
 
-    public void update(Product product) {
-        productJpaRepository.save(product);
+    public void update(Deal deal) {
+        dealJpaRepository.save(deal);
     }
 
-    public List<Product> getAll() {
-        List<Product> products = productJpaRepository.findAll();
-        return products;
+    public List<Deal> getAll() {
+        List<Deal> deals = dealJpaRepository.findAll();
+        return deals;
     }
 
-    public List<Product> getPageList(int page, int size, String sortDir, String sort) {
+    public List<Deal> getPageList(int page, int size, String sortDir, String sort) {
         PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
 
-        Page<Product> products = productJpaRepository.findAll(pageReq);
-        return products.getContent();
+        Page<Deal> respondedPage = dealJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
     }
 
     public void deleteById(Integer id) {
-        productJpaRepository.deleteById(id);
+        dealJpaRepository.deleteById(id);
     }
 
 
