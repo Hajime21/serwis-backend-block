@@ -1,20 +1,13 @@
 package pb.wi.kck.controllers;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.dto.BarcodeDto;
-import pb.wi.kck.dto.ProductBlueprintDto;
 import pb.wi.kck.model.Barcode;
-import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.services.BarcodeService;
 import pb.wi.kck.services.ProductBlueprintService;
-import pb.wi.kck.services.ProductService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/barcodes")
@@ -24,80 +17,43 @@ public class BarcodeController {
 
     private final BarcodeService barcodeService;
 
-    private final ModelMapper modelMapper;
-
-    BarcodeController(ProductBlueprintService productBlueprintService, BarcodeService barcodeService, ModelMapper modelMapper) {
+    BarcodeController(ProductBlueprintService productBlueprintService, BarcodeService barcodeService) {
         this.barcodeService = barcodeService;
         this.productBlueprintService = productBlueprintService;
-        this.modelMapper = modelMapper;
-        this.modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT)
-                .setDestinationNamingConvention(LombokBuilderNamingConvention.INSTANCE)
-                .setDestinationNameTransformer(LombokBuilderNameTransformer.INSTANCE);
-    }
-
-    private BarcodeDto convertToDto(Barcode barcode) {
-        BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
-        System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
-        System.out.println(barcode);
-        System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
-        System.out.println(barcodeDto);
-        return barcodeDto;
-    }
-
-    private Barcode convertToEntity(BarcodeDto barcodeDto) throws ParseException {
-        Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
-        System.out.println("======== DTO BARCODE'U DO ZMAPOWANIA ======");
-        System.out.println(barcodeDto);
-        System.out.println("======== ZMAPOWANY BARCODE ======");
-        System.out.println(barcode);
-
-        if (barcodeDto.getBarcodeId() != null) {
-            Barcode oldBarcode = barcodeService.getById(barcodeDto.getBarcodeId());
-            System.out.println("CHUJ");
-            //post.setSent(oldPost.isSent());
-        }
-        return barcode;
     }
 
     @GetMapping()
-    public List<BarcodeDto> getAll() {
+    public List<Barcode> getAll() {
         List<Barcode> barcodes = barcodeService.getAll();
-        return barcodes.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return barcodes;
     }
 
     @GetMapping("/page/{pageNumber}")
     @ResponseBody
-    public List<BarcodeDto> getBarcodesPage(@PathVariable Integer pageNumber) {
+    public List<Barcode> getBarcodesPage(@PathVariable Integer pageNumber) {
         List<Barcode> posts = barcodeService.getPageList(pageNumber, 33, "ASC", "barcodeId");
-        return posts.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return posts;
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public BarcodeDto createBarcode(@RequestBody BarcodeDto barcodeDto) throws ParseException {
-        Barcode barcode = convertToEntity(barcodeDto);
-        Barcode barcodeCreated = barcodeService.create(barcode);
-        return convertToDto(barcodeCreated);
+    public Barcode createBarcode(@RequestBody Barcode newBarcode) throws ParseException {
+        Barcode barcodeCreated = barcodeService.create(newBarcode);
+        return barcodeCreated;
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public BarcodeDto getBarcode(@PathVariable Integer id) {
-        return convertToDto(barcodeService.getById(id));
+    public Barcode getBarcode(@PathVariable Integer id) {
+        return barcodeService.getById(id);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BarcodeDto updateBarcode(@RequestBody BarcodeDto barcodeDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
-        Barcode barcode = convertToEntity(barcodeDto);
+    public Barcode updateBarcode(@RequestBody Barcode barcode, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
         barcodeService.update(barcode);
-        return convertToDto(barcodeService.getById(id));
+        return barcodeService.getById(id);
     }
 
     @DeleteMapping(value = "/{id}")

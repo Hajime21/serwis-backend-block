@@ -21,7 +21,8 @@ public class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(ProductBlueprintJpaRepository repository1, ProductJpaRepository repository2) {
         return args -> {
-            log.info("Preloading " + repository1.save(ProductBlueprint.builder().productBlueprintName("Domestos").manufacturer("UNILEVER").barcode("8717163350034").barcodeType("EAN-13").description("Plyn do toalet").modificationDate(LocalDateTime.now()).build()));
+            log.info("Preloading " + repository1.save(ProductBlueprint.builder().productBlueprintName("Domestos").manufacturer("UNILEVER").description("Plyn do toalet").modificationDate(LocalDateTime.now()).build()));
+            log.info("Preloading " + repository1.save(ProductBlueprint.builder().productBlueprintName("Papier toaletowy").manufacturer("Servus").description("Papier do podcierania").modificationDate(LocalDateTime.now()).build()));
 //            pb = new ProductBlueprint(2,"4Move Vitamin Water","FOODCARE","5900552077756","EAN-13","Woda smakowa","",1, LocalDateTime.now(), null);
 //            log.info("Preloading " + repository1.save(pb));
 //            pb = new ProductBlueprint(3,"Chappi z drobiem","MARS PC","5900951252815","PDF417","Karma pełnoporcjowa","",1, LocalDateTime.now(), null);

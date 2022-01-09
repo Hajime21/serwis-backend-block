@@ -21,8 +21,6 @@ public class ProductBlueprint {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer productBlueprintId;
     private String productBlueprintName;
     private String manufacturer;
-    private String barcode;
-    private String barcodeType;
     private String description;
     private String imgPath;
     private LocalDateTime modificationDate;
