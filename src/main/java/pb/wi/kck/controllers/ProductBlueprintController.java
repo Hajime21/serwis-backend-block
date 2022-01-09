@@ -5,7 +5,9 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pb.wi.kck.dto.BarcodeDto;
 import pb.wi.kck.dto.ProductBlueprintDto;
+import pb.wi.kck.model.Barcode;
 import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.services.ProductBlueprintService;
 import pb.wi.kck.services.ProductService;
@@ -73,11 +75,12 @@ public class ProductBlueprintController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/page/{pageNumber}")
+    @GetMapping("/paging")
     @ResponseBody
-    public List<ProductBlueprintDto> getProductBlueprintsPage(@PathVariable Integer pageNumber) {
-        List<ProductBlueprint> posts = productBlueprintService.getPageList(pageNumber, 33, "ASC", "productBlueprintId");
-        return posts.stream()
+    public List<ProductBlueprintDto> getProductBlueprintsPage(@PathVariable Integer pageNumber, @RequestParam Integer pageSize) {
+        //List<ProductBlueprint> productBlueprints = productBlueprintService.getPageList(pageNumber, 33, "ASC", "productBlueprintId");
+        List<ProductBlueprint> productBlueprints = productBlueprintService.getAllPage(pageNumber, pageSize);
+        return productBlueprints.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -90,8 +93,38 @@ public class ProductBlueprintController {
 
     @GetMapping(value = "/s")
     @ResponseBody
-    public List<ProductBlueprint> findProductBlueprint(@RequestParam String name) {
-        return productBlueprintService.findByName(name);
+    public List<ProductBlueprintDto> findProductBlueprint(@RequestParam String str, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<ProductBlueprint> productBlueprints = productBlueprintService.findAllByAnythingPage(str, pageNumber, pageSize);
+        return productBlueprints.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/n")
+    @ResponseBody
+    public List<ProductBlueprintDto> findProductBlueprintByName(@RequestParam String name, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<ProductBlueprint> productBlueprints = productBlueprintService.findAllByNamePage(name, pageNumber, pageSize);
+        return productBlueprints.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/d")
+    @ResponseBody
+    public List<ProductBlueprintDto> findProductBlueprintByDescription(@RequestParam String description, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<ProductBlueprint> productBlueprints = productBlueprintService.findAllByDescriptionPage(description, pageNumber, pageSize);
+        return productBlueprints.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/m")
+    @ResponseBody
+    public List<ProductBlueprintDto> findProductBlueprintByManufacturer(@RequestParam String manufacturer, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<ProductBlueprint> productBlueprints = productBlueprintService.findAllByNamePage(manufacturer, pageNumber, pageSize);
+        return productBlueprints.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/new")

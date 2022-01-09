@@ -5,9 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import pb.wi.kck.model.Barcode;
+import pb.wi.kck.model.Product;
 import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.repositories.ProductBlueprintJpaRepository;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Service
@@ -37,20 +40,47 @@ public class ProductBlueprintService { //implements ProductBlueprintService {
         return productBlueprints;
     }
 
-    public List<ProductBlueprint> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<ProductBlueprint> getPageList(int page, int size, String sortDir, String sort) {
+    public List<ProductBlueprint> getAllPage(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productBlueprintId");
         Page<ProductBlueprint> respondedPage = productBlueprintJpaRepository.findAll(pageReq);
         return respondedPage.getContent();
+    }
+
+    public List<ProductBlueprint> findAllByNamePage(String name, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productBlueprintName");
+        Page<ProductBlueprint> respondedPage = productBlueprintJpaRepository.findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(name, pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<ProductBlueprint> findAllByDescriptionPage(String description, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productBlueprintName");
+        Page<ProductBlueprint> respondedPage = productBlueprintJpaRepository.findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(description, pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<ProductBlueprint> findAllByManufacturerPage(String manufacturer, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productBlueprintName");
+        Page<ProductBlueprint> respondedPage = productBlueprintJpaRepository.findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(manufacturer, pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<ProductBlueprint> findAllByAnythingPage(String str, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productBlueprintName");
+        Page<ProductBlueprint> respondedPage = productBlueprintJpaRepository.findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(str, pageReq);
+        LinkedHashSet<ProductBlueprint> set = new LinkedHashSet<>(respondedPage.getContent());
+        respondedPage = productBlueprintJpaRepository.findProductBlueprintByDescriptionContainingOrderByProductBlueprintNameAsc(str, pageReq);
+        set.addAll(new LinkedHashSet<>(respondedPage.getContent()));
+        respondedPage = productBlueprintJpaRepository.findProductBlueprintByManufacturerOrderByProductBlueprintNameAsc(str, pageReq);
+        set.addAll(new LinkedHashSet<>(respondedPage.getContent()));
+        return set.stream().toList();
     }
 
     public void deleteById(Integer id) {
         productBlueprintJpaRepository.deleteById(id);
     }
 
-    public List<ProductBlueprint> findByName(String name) {
-        return productBlueprintJpaRepository.findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(name);
-    }
+
 
 //    public ProductBlueprintDTO findById(Integer productBlueprintId) {
 //        var temp = productBlueprintJpaRepository.findById(productBlueprintId;

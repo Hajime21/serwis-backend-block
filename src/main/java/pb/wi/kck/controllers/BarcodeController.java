@@ -67,12 +67,12 @@ public class BarcodeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/")
+    @GetMapping("/paging")
     @ResponseBody
     public List<BarcodeDto> getBarcodesPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        //List<Barcode> posts = barcodeService.getAllPage(pageNumber, 33, "ASC", "barcodeId");
-        List<Barcode> posts = barcodeService.getAllPage(pageNumber, pageSize);
-        return posts.stream()
+        //List<Barcode> barcodes = barcodeService.getAllPage(pageNumber, 33, "ASC", "barcodeId");
+        List<Barcode> barcodes = barcodeService.getAllPage(pageNumber, pageSize);
+        return barcodes.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -101,6 +101,9 @@ public class BarcodeController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BarcodeDto updateBarcode(@RequestBody BarcodeDto barcodeDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
+        if (barcodeDto.getBarcodeId() != null && barcodeDto.getBarcodeId() != 0 && barcodeDto.getBarcodeId() != id) {
+            System.out.println("Identyfikatory kodu kreskowego w requeście PUT niezgodne! - " + barcodeDto.getBarcodeId().toString() + id.toString());
+        }
         Barcode barcode = convertToEntity(barcodeDto);
         barcodeService.update(barcode);
         return convertToDto(barcodeService.getById(id));

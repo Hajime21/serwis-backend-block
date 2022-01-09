@@ -12,8 +12,10 @@ import java.util.List;
 @Repository
 public interface ProductBlueprintJpaRepository extends JpaRepository<ProductBlueprint, Integer>, PagingAndSortingRepository<ProductBlueprint, Integer> {
     //@Query("select * from ProductBlueprint u")
-    Page<ProductBlueprint> findAll(Pageable pageReq); //TODO: zmienic to na faktyyczna paginacje
-    List<ProductBlueprint> findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(String name); //TODO: zmienic to na paginacje
+    Page<ProductBlueprint> findAll(Pageable pageReq);
+    Page<ProductBlueprint> findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(String name, Pageable pageReq);
+    Page<ProductBlueprint> findProductBlueprintByDescriptionContainingOrderByProductBlueprintNameAsc(String description, Pageable pageReq);
+    Page<ProductBlueprint> findProductBlueprintByManufacturerOrderByProductBlueprintNameAsc(String manufacturer, Pageable pageReq);
     ProductBlueprint getById(Integer integer);
 }
 
