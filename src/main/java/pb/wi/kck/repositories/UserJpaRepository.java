@@ -10,4 +10,5 @@ import pb.wi.kck.model.User;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Integer>, PagingAndSortingRepository<User, Integer> {
     Page<User> findAll(Pageable pageReq);
+    Page<User> findAllByEmail(String str, Pageable pageReq);
 }

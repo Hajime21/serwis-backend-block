@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pb.wi.kck.model.Address;
 import pb.wi.kck.model.FoodProductBlueprint;
+import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.repositories.AddressJpaRepository;
 import pb.wi.kck.repositories.FoodProductBlueprintJpaRepository;
 
@@ -39,10 +40,16 @@ public class AddressService { //implements ProductBlueprintService {
         return addresses;
     }
 
-    public List<Address> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<Address> getAllPage(int page, int size, String sortDir, String sort) {
+    public List<Address> getAllPage(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "addressId");
         Page<Address> respondedPage = addressJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<Address> findAllByAnythingPage(String str, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "street");
+        Page<Address> respondedPage = addressJpaRepository.findAllByCityContainingOrCountryContainingOrStreetContainingOrPostalCodeContainingOrderByPostalCode(str, str, str, str, pageReq);
         return respondedPage.getContent();
     }
 

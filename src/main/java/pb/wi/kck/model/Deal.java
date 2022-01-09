@@ -2,6 +2,8 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import pb.wi.kck.dto.CompanyDto;
+import pb.wi.kck.dto.DealDto;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -29,6 +31,15 @@ public class Deal {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "COMPANY_ID", nullable = false)
     private Company company;
+
+    public Deal(DealDto dealDto, Company company, User user) {
+        this.dealId = dealDto.getDealId();
+        this.purchaseDate = dealDto.getPurchaseDate();
+        this.purchaseValue = dealDto.getPurchaseValue();
+        this.documentName = dealDto.getDocumentName();
+        this.user = user;
+        this.company = company;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -10,5 +10,5 @@ import pb.wi.kck.model.FoodProductBlueprint;
 @Repository
 public interface FoodProductBlueprintJpaRepository extends JpaRepository<FoodProductBlueprint, Integer>, PagingAndSortingRepository<FoodProductBlueprint, Integer> {
     Page<FoodProductBlueprint> findAll(Pageable pageReq);
+    Page<FoodProductBlueprint> findAllByNameContainingOrDescriptionContainingOrManufacturerContainingOrderByName(String name, String description, String manufacturer, Pageable pageable);
 }
-

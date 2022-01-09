@@ -10,4 +10,5 @@ import pb.wi.kck.model.FoodProductClass;
 @Repository
 public interface FoodProductClassJpaRepository extends JpaRepository<FoodProductClass, Integer>, PagingAndSortingRepository<FoodProductClass, Integer> {
     Page<FoodProductClass> findAll(Pageable pageReq);
+    Page<FoodProductClass> findAllByFoodProductClassNameContaining(String str, Pageable pageReq);
 }

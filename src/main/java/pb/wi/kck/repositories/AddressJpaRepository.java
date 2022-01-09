@@ -10,4 +10,5 @@ import pb.wi.kck.model.Address;
 @Repository
 public interface AddressJpaRepository extends JpaRepository<Address, Integer>, PagingAndSortingRepository<Address, Integer> {
     Page<Address> findAll(Pageable pageReq);
+    Page<Address> findAllByCityContainingOrCountryContainingOrStreetContainingOrPostalCodeContainingOrderByPostalCode(String city, String country, String street, String postalCode, Pageable pageReq);
 }

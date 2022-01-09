@@ -2,6 +2,7 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import pb.wi.kck.dto.ProductDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,6 +32,15 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "LOCATION_ID", nullable = false)
     private Location location;
+
+    public Product(ProductDto productDto, ProductBlueprint productBlueprint, Deal deal, Location location) {
+        this.productId = productDto.getProductId();
+        this.useByDate = productDto.getUseByDate();
+        this.quantity = productDto.getQuantity();
+        this.productBlueprint = productBlueprint;
+        this.deal = deal;
+        this.location = location;
+    }
 
     @Override
     public boolean equals(Object o) {

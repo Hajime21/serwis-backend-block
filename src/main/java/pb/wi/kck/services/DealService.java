@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pb.wi.kck.model.Deal;
 import pb.wi.kck.repositories.DealJpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,10 +38,16 @@ public class DealService { //implements ProductBlueprintService {
         return deals;
     }
 
-    public List<Deal> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<Deal> getPageList(int page, int size, String sortDir, String sort) {
+    public List<Deal> getPageList(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "dealId");
         Page<Deal> respondedPage = dealJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<Deal> findAllByDatePage(LocalDate purchaseDate, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "dealId");
+        Page<Deal> respondedPage = dealJpaRepository.findAllByPurchaseDateOrderByPurchaseDateAsc(purchaseDate, pageReq);
         return respondedPage.getContent();
     }
 

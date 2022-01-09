@@ -5,28 +5,24 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.dto.BarcodeDto;
-import pb.wi.kck.model.Barcode;
-import pb.wi.kck.services.BarcodeService;
-import pb.wi.kck.services.ProductBlueprintService;
+import pb.wi.kck.dto.FoodProductClassDto;
+import pb.wi.kck.model.FoodProductClass;
+import pb.wi.kck.services.FoodProductClassService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/barcodes")
-public class BarcodeController {
+@RequestMapping("/api/fpc")
+public class FoodProductClassController {
 
-    private final ProductBlueprintService productBlueprintService;
-
-    private final BarcodeService barcodeService;
+    private final FoodProductClassService foodProductClassService;
 
     private final ModelMapper modelMapper;
 
-    BarcodeController(ProductBlueprintService productBlueprintService, BarcodeService barcodeService, ModelMapper modelMapper) {
-        this.barcodeService = barcodeService;
-        this.productBlueprintService = productBlueprintService;
+    FoodProductClassController(FoodProductClassService foodProductClassService, ModelMapper modelMapper) {
+        this.foodProductClassService = foodProductClassService;
         this.modelMapper = modelMapper;
         this.modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
@@ -34,61 +30,61 @@ public class BarcodeController {
                 .setDestinationNameTransformer(LombokBuilderNameTransformer.INSTANCE);
     }
 
-    private BarcodeDto convertToDto(Barcode barcode) {
+    private FoodProductClassDto convertToDto(FoodProductClass foodProductClass) {
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
-        System.out.println(barcode);
-        BarcodeDto barcodeDto = new BarcodeDto(barcode, barcode.getProductBlueprint().getProductBlueprintId());
+        System.out.println(foodProductClass);
+        FoodProductClassDto foodProductClassDto = new FoodProductClassDto(foodProductClass);
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
-        System.out.println(barcodeDto);
-        return barcodeDto;
+        System.out.println(foodProductClassDto);
+        return foodProductClassDto;
     }
 
-    private Barcode convertToEntity(BarcodeDto barcodeDto) throws ParseException {
+    private FoodProductClass convertToEntity(FoodProductClassDto foodProductClassDto) throws ParseException {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
-        System.out.println("======== DTO BARCODE'U DO ZMAPOWANIA ======");
-        System.out.println(barcodeDto);
-        Barcode barcode = new Barcode(barcodeDto, productBlueprintService.getById(barcodeDto.getProductBlueprintId()));
-        System.out.println("======== ZMAPOWANY BARCODE ======");
-        System.out.println(barcode);
+        System.out.println("======== DTO FPC DO ZMAPOWANIA ======");
+        System.out.println(foodProductClassDto);
+        FoodProductClass foodProductClass = new FoodProductClass(foodProductClassDto);
+        System.out.println("======== ZMAPOWANY FPC ======");
+        System.out.println(foodProductClass);
 
 //        if (barcodeDto.getBarcodeId() != null) {
 //            Barcode oldBarcode = barcodeService.getById(barcodeDto.getBarcodeId());
 //            System.out.println("CHUJ");
 //            //post.setSent(oldPost.isSent());
 //        }
-        return barcode;
+        return foodProductClass;
     }
 
     @GetMapping()
-    public List<BarcodeDto> getAll() {
-        List<Barcode> barcodes = barcodeService.getAll();
-        return barcodes.stream()
+    public List<FoodProductClassDto> getAll() {
+        List<FoodProductClass> foodProductClasses = foodProductClassService.getAll();
+        return foodProductClasses.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/paging")
     @ResponseBody
-    public List<BarcodeDto> getBarcodesPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+    public List<FoodProductClassDto> getFoodProductClassesPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         //List<Barcode> barcodes = barcodeService.getAllPage(pageNumber, 33, "ASC", "barcodeId");
-        List<Barcode> barcodes = barcodeService.getAllPage(pageNumber, pageSize);
-        return barcodes.stream()
+        List<FoodProductClass> foodProductClasses = foodProductClassService.getAllPage(pageNumber, pageSize);
+        return foodProductClasses.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public BarcodeDto getBarcodeById(@PathVariable Integer id) {
-        return convertToDto(barcodeService.getById(id));
+    public FoodProductClassDto getFoodProductClassById(@PathVariable Integer id) {
+        return convertToDto(foodProductClassService.getById(id));
     }
 
     @GetMapping(value = "/s")
     @ResponseBody
-    public List<BarcodeDto> findBarcode(@RequestParam String code, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        List<Barcode> barcodes = barcodeService.findAllByCodePage(code, pageNumber, pageSize);
-        return barcodes.stream()
+    public List<FoodProductClassDto> findFoodProductClass(@RequestParam String str, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<FoodProductClass> foodProductClasses = foodProductClassService.findAllByNamePage(str, pageNumber, pageSize);
+        return foodProductClasses.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -96,27 +92,27 @@ public class BarcodeController {
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public BarcodeDto createBarcode(@RequestBody BarcodeDto barcodeDto) throws ParseException {
-        Barcode barcode = convertToEntity(barcodeDto);
-        Barcode barcodeCreated = barcodeService.create(barcode);
-        return convertToDto(barcodeCreated);
+    public FoodProductClassDto createFoodProductClass(@RequestBody FoodProductClassDto foodProductClassDto) throws ParseException {
+        FoodProductClass foodProductClass = convertToEntity(foodProductClassDto);
+        FoodProductClass foodProductClassCreated = foodProductClassService.create(foodProductClass);
+        return convertToDto(foodProductClass);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BarcodeDto updateBarcode(@RequestBody BarcodeDto barcodeDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
-        if (barcodeDto.getBarcodeId() != null && barcodeDto.getBarcodeId() != 0 && !Objects.equals(barcodeDto.getBarcodeId(), id)) {
-            System.out.println("Identyfikatory kodu kreskowego w requeście PUT niezgodne! - " + barcodeDto.getBarcodeId().toString() + id.toString());
+    public FoodProductClassDto updateFoodProductClass(@RequestBody FoodProductClassDto foodProductClassDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
+        if (foodProductClassDto.getFoodProductClassId() != null && foodProductClassDto.getFoodProductClassId() != 0 && !Objects.equals(foodProductClassDto.getFoodProductClassName(), id)) {
+            System.out.println("Identyfikatory FoodProductClass w requeście PUT niezgodne! - " + foodProductClassDto.getFoodProductClassId().toString() + id.toString());
         }
-        Barcode barcode = convertToEntity(barcodeDto);
-        barcodeService.update(barcode);
-        return convertToDto(barcodeService.getById(id));
+        FoodProductClass foodProductClass = convertToEntity(foodProductClassDto);
+        foodProductClassService.update(foodProductClass);
+        return convertToDto(foodProductClassService.getById(id));
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBarcode(@PathVariable Integer id) {
-        barcodeService.deleteById(id);
+    public void deleteFoodProductClass(@PathVariable Integer id) {
+        foodProductClassService.deleteById(id);
     }
 
 

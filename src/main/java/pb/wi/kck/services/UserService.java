@@ -39,10 +39,16 @@ public class UserService { //implements ProductBlueprintService {
         return users;
     }
 
-    public List<User> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<User> getPageList(int page, int size, String sortDir, String sort) {
+    public List<User> getPageList(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "userId");
         Page<User> respondedPage = userJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<User> findAllByAnythingPage(String str, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "userId");
+        Page<User> respondedPage = userJpaRepository.findAllByEmail(str, pageReq);
         return respondedPage.getContent();
     }
 

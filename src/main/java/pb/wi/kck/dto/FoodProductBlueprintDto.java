@@ -1,22 +1,42 @@
 package pb.wi.kck.dto;
 
-import lombok.Data;
+import lombok.*;
+import pb.wi.kck.model.FoodProductBlueprint;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class FoodProductBlueprintDto implements Serializable {
-    private final Integer foodProductBlueprintId;
-    private final String name;
-    private final String manufacturer;
-    private final String description;
-    private final String imgPath;
-    private final LocalDateTime modificationDate;
-    private final int measuredValue;
-    private final int kcalPer100;
-    private final int protein;
-    private final int fat;
-    private final int carbohydrates;
-    private final FoodProductClassDto foodProductClass;
+    private Integer foodProductBlueprintId;
+    private String name;
+    private String manufacturer;
+    private String description;
+    private String imgPath;
+    private LocalDateTime modificationDate;
+    private int measuredValue;
+    private int kcalPer100;
+    private int protein;
+    private int fat;
+    private int carbohydrates;
+    private Integer foodProductClassId;
+
+    public FoodProductBlueprintDto(FoodProductBlueprint foodProductBlueprint, Integer foodProductClassId) {
+        this.foodProductBlueprintId = foodProductBlueprint.getFoodProductBlueprintId();
+        this.name = foodProductBlueprint.getName();
+        this.manufacturer = foodProductBlueprint.getManufacturer();
+        this.description = foodProductBlueprint.getDescription();
+        this.imgPath = foodProductBlueprint.getImgPath();
+        this.modificationDate = foodProductBlueprint.getModificationDate();
+        this.measuredValue = foodProductBlueprint.getMeasuredValue();
+        this.kcalPer100 = foodProductBlueprint.getKcalPer100();
+        this.protein = foodProductBlueprint.getProtein();
+        this.fat = foodProductBlueprint.getFat();
+        this.carbohydrates = foodProductBlueprint.getCarbohydrates();
+        this.foodProductClassId = foodProductClassId;
+    }
 }

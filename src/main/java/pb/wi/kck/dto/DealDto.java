@@ -1,17 +1,32 @@
 package pb.wi.kck.dto;
 
-import lombok.Data;
+import lombok.*;
+import pb.wi.kck.model.Deal;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class DealDto implements Serializable {
-    private final Integer dealId;
-    private final LocalDate purchaseDate;
-    private final BigDecimal purchaseValue;
-    private final String documentName;
-    private final UserDto user;
-    private final CompanyDto company;
+    private Integer dealId;
+    private LocalDate purchaseDate;
+    private BigDecimal purchaseValue;
+    private String documentName;
+    private Integer userId;
+    private Integer companyId;
+
+    public DealDto(Deal deal, Integer companyId, Integer userId) {
+        this.dealId = deal.getDealId();
+        this.purchaseDate = deal.getPurchaseDate();
+        this.purchaseValue = deal.getPurchaseValue();
+        this.documentName = deal.getDocumentName();
+        this.companyId = companyId;
+        this.userId = userId;
+    }
+
 }

@@ -1,9 +1,11 @@
 package pb.wi.kck.model;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 import pb.wi.kck.dto.BarcodeDto;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -39,5 +41,18 @@ public class Barcode {
         this.code = barcodeDto.getCode();
         this.type = barcodeDto.getType();
         this.productBlueprint = productBlueprint;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Barcode barcode = (Barcode) o;
+        return barcodeId != null && Objects.equals(barcodeId, barcode.barcodeId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

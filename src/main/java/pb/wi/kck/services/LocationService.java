@@ -37,10 +37,16 @@ public class LocationService { //implements ProductBlueprintService {
         return locations;
     }
 
-    public List<Location> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<Location> getPageList(int page, int size, String sortDir, String sort) {
+    public List<Location> getAllPage(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "locationId");
         Page<Location> respondedPage = locationJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<Location> findAllByNamePage(String name, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "locationId");
+        Page<Location> respondedPage = locationJpaRepository.findAllByLocationNameContaining(name, pageReq);
         return respondedPage.getContent();
     }
 

@@ -1,12 +1,24 @@
 package pb.wi.kck.dto;
 
-import lombok.Data;
+import lombok.*;
+import pb.wi.kck.model.FoodProductClass;
 
 import java.io.Serializable;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class FoodProductClassDto implements Serializable {
-    private final Integer foodProductClassId;
-    private final String foodProductClassName;
-    private final int desiredQuantity;
+    private Integer foodProductClassId;
+    private String foodProductClassName;
+    private int desiredQuantity;
+
+    public FoodProductClassDto(FoodProductClass foodProductClass) {
+        this.foodProductClassId = foodProductClass.getFoodProductClassId();
+        this.foodProductClassName = foodProductClass.getFoodProductClassName();
+        this.desiredQuantity = foodProductClass.getDesiredQuantity();
+    }
+
 }

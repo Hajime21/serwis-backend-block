@@ -77,7 +77,7 @@ public class ProductBlueprintController {
 
     @GetMapping("/paging")
     @ResponseBody
-    public List<ProductBlueprintDto> getProductBlueprintsPage(@PathVariable Integer pageNumber, @RequestParam Integer pageSize) {
+    public List<ProductBlueprintDto> getProductBlueprintsPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         //List<ProductBlueprint> productBlueprints = productBlueprintService.getPageList(pageNumber, 33, "ASC", "productBlueprintId");
         List<ProductBlueprint> productBlueprints = productBlueprintService.getAllPage(pageNumber, pageSize);
         return productBlueprints.stream()
@@ -87,7 +87,7 @@ public class ProductBlueprintController {
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public ProductBlueprintDto getProductBlueprint(@PathVariable Integer id) {
+    public ProductBlueprintDto getProductBlueprintById(@PathVariable Integer id) {
         return convertToDto(productBlueprintService.getById(id));
     }
 

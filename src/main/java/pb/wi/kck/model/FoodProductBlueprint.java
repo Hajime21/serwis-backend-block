@@ -2,6 +2,7 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import pb.wi.kck.dto.FoodProductBlueprintDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,6 +35,21 @@ public class FoodProductBlueprint {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID", nullable = false)
     private FoodProductClass foodProductClass;
+
+    public FoodProductBlueprint(FoodProductBlueprintDto foodProductBlueprintDto, FoodProductClass foodProductClass) {
+        this.foodProductBlueprintId = foodProductBlueprintDto.getFoodProductBlueprintId();
+        this.name = foodProductBlueprintDto.getName();
+        this.manufacturer = foodProductBlueprintDto.getManufacturer();
+        this.description = foodProductBlueprintDto.getDescription();
+        this.imgPath = foodProductBlueprintDto.getImgPath();
+        this.modificationDate = foodProductBlueprintDto.getModificationDate();
+        this.measuredValue = foodProductBlueprintDto.getMeasuredValue();
+        this.kcalPer100 = foodProductBlueprintDto.getKcalPer100();
+        this.protein = foodProductBlueprintDto.getProtein();
+        this.fat = foodProductBlueprintDto.getFat();
+        this.carbohydrates = foodProductBlueprintDto.getCarbohydrates();
+        this.foodProductClass = foodProductClass;
+    }
 
     @Override
     public boolean equals(Object o) {

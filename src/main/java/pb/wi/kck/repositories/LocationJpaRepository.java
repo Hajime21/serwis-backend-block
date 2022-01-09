@@ -10,4 +10,5 @@ import pb.wi.kck.model.Location;
 @Repository
 public interface LocationJpaRepository extends JpaRepository<Location, Integer>, PagingAndSortingRepository<Location, Integer> {
     Page<Location> findAll(Pageable pageReq);
+    Page<Location> findAllByLocationNameContaining(String name, Pageable pageReq);
 }

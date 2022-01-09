@@ -1,13 +1,25 @@
 package pb.wi.kck.dto;
 
-import lombok.Data;
+import lombok.*;
+import pb.wi.kck.model.User;
 
 import java.io.Serializable;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class UserDto implements Serializable {
-    private final Integer userId;
-    private final String login;
-    private final String password;
-    private final String email;
+    private Integer userId;
+    private String login;
+    private String password;
+    private String email;
+
+    public UserDto(User user) {
+        this.userId = user.getUserId();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+    }
 }

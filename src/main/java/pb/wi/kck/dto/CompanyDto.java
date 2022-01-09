@@ -1,13 +1,25 @@
 package pb.wi.kck.dto;
 
-import lombok.Data;
+import lombok.*;
+import pb.wi.kck.model.Company;
 
 import java.io.Serializable;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class CompanyDto implements Serializable {
-    private final Integer companyId;
-    private final String companyName;
-    private final String companyNIP;
-    private final AddressDto address;
+    private Integer companyId;
+    private String companyName;
+    private String companyNIP;
+    private Integer addressId;
+
+    public CompanyDto(Company company, Integer addressId) {
+        this.companyId = company.getCompanyId();
+        this.companyName = company.getCompanyName();
+        this.companyNIP = company.getCompanyNIP();
+        this.addressId = addressId;
+    }
 }

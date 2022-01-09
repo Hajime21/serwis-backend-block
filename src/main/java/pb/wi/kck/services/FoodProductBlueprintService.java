@@ -37,10 +37,16 @@ public class FoodProductBlueprintService { //implements ProductBlueprintService 
         return foodProductBlueprints;
     }
 
-    public List<FoodProductBlueprint> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<FoodProductBlueprint> getPageList(int page, int size, String sortDir, String sort) {
+    public List<FoodProductBlueprint> getPageList(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "foodProductBlueprintId");
         Page<FoodProductBlueprint> respondedPage = foodProductBlueprintJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<FoodProductBlueprint> findAllByAnythingPage(String str, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "foodProductBlueprintId");
+        Page<FoodProductBlueprint> respondedPage = foodProductBlueprintJpaRepository.findAllByNameContainingOrDescriptionContainingOrManufacturerContainingOrderByName(str, str, str, pageReq);
         return respondedPage.getContent();
     }
 

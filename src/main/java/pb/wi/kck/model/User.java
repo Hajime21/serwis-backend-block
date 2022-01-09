@@ -2,6 +2,7 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import pb.wi.kck.dto.UserDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,13 @@ public class User {
     private String login;
     private String password;
     private String email;
+
+    public User(UserDto userDto) {
+        this.userId = userDto.getUserId();
+        this.login = userDto.getLogin();
+        this.password = userDto.getPassword();
+        this.email = userDto.getEmail();
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,7 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import pb.wi.kck.dto.LocationDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,11 @@ import java.util.Objects;
 public class Location {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer locationId;
     private String locationName;
+
+    public Location(LocationDto locationDto) {
+        this.locationId = locationDto.getLocationId();
+        this.locationName = locationDto.getLocationName();
+    }
 
     @Override
     public boolean equals(Object o) {

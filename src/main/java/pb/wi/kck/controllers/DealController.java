@@ -5,28 +5,33 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.dto.BarcodeDto;
-import pb.wi.kck.model.Barcode;
-import pb.wi.kck.services.BarcodeService;
-import pb.wi.kck.services.ProductBlueprintService;
+import pb.wi.kck.dto.DealDto;
+import pb.wi.kck.model.Deal;
+import pb.wi.kck.services.CompanyService;
+import pb.wi.kck.services.DealService;
+import pb.wi.kck.services.UserService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/barcodes")
-public class BarcodeController {
+@RequestMapping("/api/deals")
+public class DealController {
 
-    private final ProductBlueprintService productBlueprintService;
+    private final DealService dealService;
 
-    private final BarcodeService barcodeService;
+    private final CompanyService companyService;
+
+    private final UserService userService;
 
     private final ModelMapper modelMapper;
 
-    BarcodeController(ProductBlueprintService productBlueprintService, BarcodeService barcodeService, ModelMapper modelMapper) {
-        this.barcodeService = barcodeService;
-        this.productBlueprintService = productBlueprintService;
+    DealController(DealService dealService, CompanyService companyService, UserService userService, ModelMapper modelMapper) {
+        this.dealService = dealService;
+        this.companyService = companyService;
+        this.userService = userService;
         this.modelMapper = modelMapper;
         this.modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
@@ -34,61 +39,61 @@ public class BarcodeController {
                 .setDestinationNameTransformer(LombokBuilderNameTransformer.INSTANCE);
     }
 
-    private BarcodeDto convertToDto(Barcode barcode) {
+    private DealDto convertToDto(Deal deal) {
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
-        System.out.println(barcode);
-        BarcodeDto barcodeDto = new BarcodeDto(barcode, barcode.getProductBlueprint().getProductBlueprintId());
+        System.out.println(deal);
+        DealDto dealDto = new DealDto(deal, deal.getCompany().getCompanyId(), deal.getUser().getUserId());
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
-        System.out.println(barcodeDto);
-        return barcodeDto;
+        System.out.println(dealDto);
+        return dealDto;
     }
 
-    private Barcode convertToEntity(BarcodeDto barcodeDto) throws ParseException {
+    private Deal convertToEntity(DealDto dealDto) throws ParseException {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
-        System.out.println("======== DTO BARCODE'U DO ZMAPOWANIA ======");
-        System.out.println(barcodeDto);
-        Barcode barcode = new Barcode(barcodeDto, productBlueprintService.getById(barcodeDto.getProductBlueprintId()));
-        System.out.println("======== ZMAPOWANY BARCODE ======");
-        System.out.println(barcode);
+        System.out.println("======== DTO DEALA DO ZMAPOWANIA ======");
+        System.out.println(dealDto);
+        Deal deal = new Deal(dealDto, companyService.getById(dealDto.getCompanyId()), userService.getById(dealDto.getUserId()));
+        System.out.println("======== ZMAPOWANY DEAL ======");
+        System.out.println(deal);
 
 //        if (barcodeDto.getBarcodeId() != null) {
 //            Barcode oldBarcode = barcodeService.getById(barcodeDto.getBarcodeId());
 //            System.out.println("CHUJ");
 //            //post.setSent(oldPost.isSent());
 //        }
-        return barcode;
+        return deal;
     }
 
     @GetMapping()
-    public List<BarcodeDto> getAll() {
-        List<Barcode> barcodes = barcodeService.getAll();
-        return barcodes.stream()
+    public List<DealDto> getAll() {
+        List<Deal> deals = dealService.getAll();
+        return deals.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/paging")
     @ResponseBody
-    public List<BarcodeDto> getBarcodesPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+    public List<DealDto> getDealsPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         //List<Barcode> barcodes = barcodeService.getAllPage(pageNumber, 33, "ASC", "barcodeId");
-        List<Barcode> barcodes = barcodeService.getAllPage(pageNumber, pageSize);
-        return barcodes.stream()
+        List<Deal> deals = dealService.getPageList(pageNumber, pageSize);
+        return deals.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public BarcodeDto getBarcodeById(@PathVariable Integer id) {
-        return convertToDto(barcodeService.getById(id));
+    public DealDto getDealById(@PathVariable Integer id) {
+        return convertToDto(dealService.getById(id));
     }
 
     @GetMapping(value = "/s")
     @ResponseBody
-    public List<BarcodeDto> findBarcode(@RequestParam String code, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        List<Barcode> barcodes = barcodeService.findAllByCodePage(code, pageNumber, pageSize);
-        return barcodes.stream()
+    public List<DealDto> findDeal(@RequestParam LocalDate purchaseDate, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<Deal> deals = dealService.findAllByDatePage(purchaseDate, pageNumber, pageSize);
+        return deals.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -96,27 +101,27 @@ public class BarcodeController {
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public BarcodeDto createBarcode(@RequestBody BarcodeDto barcodeDto) throws ParseException {
-        Barcode barcode = convertToEntity(barcodeDto);
-        Barcode barcodeCreated = barcodeService.create(barcode);
-        return convertToDto(barcodeCreated);
+    public DealDto createDeal(@RequestBody DealDto dealDto) throws ParseException {
+        Deal deal = convertToEntity(dealDto);
+        Deal dealCreated = dealService.create(deal);
+        return convertToDto(dealCreated);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BarcodeDto updateBarcode(@RequestBody BarcodeDto barcodeDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
-        if (barcodeDto.getBarcodeId() != null && barcodeDto.getBarcodeId() != 0 && !Objects.equals(barcodeDto.getBarcodeId(), id)) {
-            System.out.println("Identyfikatory kodu kreskowego w requeście PUT niezgodne! - " + barcodeDto.getBarcodeId().toString() + id.toString());
+    public DealDto updateDeal(@RequestBody DealDto dealDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
+        if (dealDto.getDealId() != null && dealDto.getDealId() != 0 && !Objects.equals(dealDto.getDealId(), id)) {
+            System.out.println("Identyfikatory kodu kreskowego w requeście PUT niezgodne! - " + dealDto.getDealId().toString() + id.toString());
         }
-        Barcode barcode = convertToEntity(barcodeDto);
-        barcodeService.update(barcode);
-        return convertToDto(barcodeService.getById(id));
+        Deal deal = convertToEntity(dealDto);
+        dealService.update(deal);
+        return convertToDto(dealService.getById(id));
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBarcode(@PathVariable Integer id) {
-        barcodeService.deleteById(id);
+    public void deleteDeal(@PathVariable Integer id) {
+        dealService.deleteById(id);
     }
 
 

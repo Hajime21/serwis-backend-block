@@ -37,10 +37,16 @@ public class CompanyService { //implements ProductBlueprintService {
         return companies;
     }
 
-    public List<Company> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<Company> getPageList(int page, int size, String sortDir, String sort) {
+    public List<Company> getAllPage(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "companyId");
         Page<Company> respondedPage = companyJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<Company> findAllByAnythingPage(String str, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "companyId");
+        Page<Company> respondedPage = companyJpaRepository.findAllByCompanyNIPContainingOrCompanyNameContaining(str, str, pageReq);
         return respondedPage.getContent();
     }
 

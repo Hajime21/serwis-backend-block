@@ -1,16 +1,30 @@
 package pb.wi.kck.dto;
 
-import lombok.Data;
+import lombok.*;
+import pb.wi.kck.model.FoodProduct;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class FoodProductDto implements Serializable {
-    private final Integer foodProductId;
-    private final LocalDate useByDate;
-    private final int quantity;
-    private final FoodProductBlueprintDto foodProductBlueprint;
-    private final DealDto deal;
-    private final LocationDto location;
+    private Integer foodProductId;
+    private LocalDate useByDate;
+    private int quantity;
+    private Integer foodProductBlueprintId;
+    private Integer dealId;
+    private Integer locationId;
+
+    public FoodProductDto(FoodProduct foodProduct, Integer foodProductBlueprintId, Integer dealId, Integer locationId) {
+        this.foodProductId = foodProduct.getFoodProductId();
+        this.useByDate = foodProduct.getUseByDate();
+        this.quantity = foodProduct.getQuantity();
+        this.foodProductBlueprintId = foodProductBlueprintId;
+        this.dealId = dealId;
+        this.locationId = locationId;
+    }
 }

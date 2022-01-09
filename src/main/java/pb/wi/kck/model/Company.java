@@ -2,6 +2,7 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import pb.wi.kck.dto.CompanyDto;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -22,6 +23,13 @@ public class Company {
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "ADDRESS_ID", nullable = false)
     private Address address;
+
+    public Company(CompanyDto companyDto, Address address) {
+        this.companyId = companyDto.getCompanyId();
+        this.companyName = companyDto.getCompanyName();
+        this.companyNIP = companyDto.getCompanyNIP();
+        this.address = address;
+    }
 
     @Override
     public boolean equals(Object o) {
