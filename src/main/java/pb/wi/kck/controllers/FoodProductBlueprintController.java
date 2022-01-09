@@ -15,7 +15,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/deals")
+@RequestMapping("/api/blueprints/food")
 public class FoodProductBlueprintController {
 
     private final FoodProductBlueprintService foodProductBlueprintService;
