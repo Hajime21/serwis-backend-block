@@ -48,6 +48,9 @@ public class ProductBlueprintService { //implements ProductBlueprintService {
         productBlueprintJpaRepository.deleteById(id);
     }
 
+    public List<ProductBlueprint> findByName(String name) {
+        return productBlueprintJpaRepository.findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(name);
+    }
 
 //    public ProductBlueprintDTO findById(Integer productBlueprintId) {
 //        var temp = productBlueprintJpaRepository.findById(productBlueprintId;

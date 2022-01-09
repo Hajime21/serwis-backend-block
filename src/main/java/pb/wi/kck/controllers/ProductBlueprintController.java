@@ -35,9 +35,9 @@ public class ProductBlueprintController {
 
     private ProductBlueprintDto convertToDto(ProductBlueprint productBlueprint) {
         //ProductBlueprintDto productBlueprintDTO = modelMapper.map(productBlueprint, ProductBlueprintDto.ProductBlueprintDtoBuilder.class).build();
-        ProductBlueprintDto productBlueprintDTO = new ProductBlueprintDto(productBlueprint);
         System.out.println("-------- PRODUCTBLUEPRINT DO ZMAPOWANIA ------");
         System.out.println(productBlueprint);
+        ProductBlueprintDto productBlueprintDTO = new ProductBlueprintDto(productBlueprint);
         System.out.println("-------- ZMAPOWANE DTO PRODUCTBLUEPRINTU ------");
         System.out.println(productBlueprintDTO);
         //productBlueprintDTO.setDependingProducts(null);
@@ -46,11 +46,11 @@ public class ProductBlueprintController {
     }
 
     private ProductBlueprint convertToEntity(ProductBlueprintDto productBlueprintDto) throws ParseException {
-        ProductBlueprint productBlueprint = new ProductBlueprint(productBlueprintDto);
         //ProductBlueprint productBlueprint = modelMapper.map(productBlueprintDto, ProductBlueprint.ProductBlueprintBuilder.class).build();
         //productBlueprint.setSubmissionDate(productBlueprintDTO.getSubmissionDateConverted(userService.getCurrentUser().getPreference().getTimezone()));
         System.out.println("======== DTO PRODUCTBLUEPRINTU DO ZMAPOWANIA ======");
         System.out.println(productBlueprintDto);
+        ProductBlueprint productBlueprint = new ProductBlueprint(productBlueprintDto);
         System.out.println("======== ZMAPOWANY PRODUCTBLUEPRINT ======");
         System.out.println(productBlueprint);
 
@@ -82,6 +82,18 @@ public class ProductBlueprintController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public ProductBlueprintDto getProductBlueprint(@PathVariable Integer id) {
+        return convertToDto(productBlueprintService.getById(id));
+    }
+
+    @GetMapping(value = "/s")
+    @ResponseBody
+    public List<ProductBlueprint> findProductBlueprint(@RequestParam String name) {
+        return productBlueprintService.findByName(name);
+    }
+
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -89,12 +101,6 @@ public class ProductBlueprintController {
         ProductBlueprint productBlueprint = convertToEntity(productBlueprintDTO);
         ProductBlueprint productBlueprintCreated = productBlueprintService.create(productBlueprint);
         return convertToDto(productBlueprintCreated);
-    }
-
-    @GetMapping(value = "/{id}")
-    @ResponseBody
-    public ProductBlueprintDto getProductBlueprint(@PathVariable Integer id) {
-        return convertToDto(productBlueprintService.getById(id));
     }
 
     @PutMapping(value = "/{id}")
@@ -111,11 +117,7 @@ public class ProductBlueprintController {
         productBlueprintService.deleteById(id);
     }
 
-    @GetMapping(value = "/s")
-    @ResponseBody
-    public List<ProductBlueprint> findProductBlueprint(@RequestParam String name) {
-        return productBlueprintService.findByName(name);
-    }
+
 
 //
 //    @PutMapping(value = "/{productBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -7,9 +7,13 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import pb.wi.kck.model.ProductBlueprint;
 
+import java.util.List;
+
 @Repository
 public interface ProductBlueprintJpaRepository extends JpaRepository<ProductBlueprint, Integer>, PagingAndSortingRepository<ProductBlueprint, Integer> {
     //@Query("select * from ProductBlueprint u")
-    Page<ProductBlueprint> findAll(Pageable pageReq);
+    Page<ProductBlueprint> findAll(Pageable pageReq); //TODO: zmienic to na faktyyczna paginacje
+    List<ProductBlueprint> findProductBlueprintByProductBlueprintNameContainingOrderByProductBlueprintNameAsc(String name); //TODO: zmienic to na paginacje
+    ProductBlueprint getById(Integer integer);
 }
 

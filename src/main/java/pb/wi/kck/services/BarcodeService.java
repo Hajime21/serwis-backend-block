@@ -5,9 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import pb.wi.kck.model.Address;
 import pb.wi.kck.model.Barcode;
-import pb.wi.kck.repositories.AddressJpaRepository;
 import pb.wi.kck.repositories.BarcodeJpaRepository;
 
 import java.util.List;
@@ -39,10 +37,16 @@ public class BarcodeService { //implements ProductBlueprintService {
         return barcodes;
     }
 
-    public List<Barcode> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<Barcode> getAllPage(int page, int size, String sortDir, String sort) {
+    public List<Barcode> getAllPage(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "barcodeId");
         Page<Barcode> respondedPage = barcodeJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<Barcode> findAllByCodePage(String code, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "barcodeId");
+        Page<Barcode> respondedPage = barcodeJpaRepository.findAllByCodeContaining(code, pageReq);
         return respondedPage.getContent();
     }
 

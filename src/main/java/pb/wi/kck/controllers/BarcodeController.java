@@ -6,12 +6,9 @@ import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.BarcodeDto;
-import pb.wi.kck.dto.ProductBlueprintDto;
 import pb.wi.kck.model.Barcode;
-import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.services.BarcodeService;
 import pb.wi.kck.services.ProductBlueprintService;
-import pb.wi.kck.services.ProductService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,26 +34,28 @@ public class BarcodeController {
     }
 
     private BarcodeDto convertToDto(Barcode barcode) {
-        BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
+        //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
         System.out.println(barcode);
+        BarcodeDto barcodeDto = new BarcodeDto(barcode, barcode.getProductBlueprint().getProductBlueprintId());
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
         System.out.println(barcodeDto);
         return barcodeDto;
     }
 
     private Barcode convertToEntity(BarcodeDto barcodeDto) throws ParseException {
-        Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
+        //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO BARCODE'U DO ZMAPOWANIA ======");
         System.out.println(barcodeDto);
+        Barcode barcode = new Barcode(barcodeDto, productBlueprintService.getById(barcodeDto.getProductBlueprintId()));
         System.out.println("======== ZMAPOWANY BARCODE ======");
         System.out.println(barcode);
 
-        if (barcodeDto.getBarcodeId() != null) {
-            Barcode oldBarcode = barcodeService.getById(barcodeDto.getBarcodeId());
-            System.out.println("CHUJ");
-            //post.setSent(oldPost.isSent());
-        }
+//        if (barcodeDto.getBarcodeId() != null) {
+//            Barcode oldBarcode = barcodeService.getById(barcodeDto.getBarcodeId());
+//            System.out.println("CHUJ");
+//            //post.setSent(oldPost.isSent());
+//        }
         return barcode;
     }
 
@@ -68,13 +67,26 @@ public class BarcodeController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/page/{pageNumber}")
+    @GetMapping("/")
     @ResponseBody
-    public List<BarcodeDto> getBarcodesPage(@PathVariable Integer pageNumber) {
-        List<Barcode> posts = barcodeService.getPageList(pageNumber, 33, "ASC", "barcodeId");
+    public List<BarcodeDto> getBarcodesPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        //List<Barcode> posts = barcodeService.getAllPage(pageNumber, 33, "ASC", "barcodeId");
+        List<Barcode> posts = barcodeService.getAllPage(pageNumber, pageSize);
         return posts.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public BarcodeDto getBarcode(@PathVariable Integer id) {
+        return convertToDto(barcodeService.getById(id));
+    }
+
+    @GetMapping(value = "/s")
+    @ResponseBody
+    public List<Barcode> findBarcode(@RequestParam String code, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        return barcodeService.findAllByCodePage(code, pageNumber, pageSize);
     }
 
     @PostMapping("/new")
@@ -84,12 +96,6 @@ public class BarcodeController {
         Barcode barcode = convertToEntity(barcodeDto);
         Barcode barcodeCreated = barcodeService.create(barcode);
         return convertToDto(barcodeCreated);
-    }
-
-    @GetMapping(value = "/{id}")
-    @ResponseBody
-    public BarcodeDto getBarcode(@PathVariable Integer id) {
-        return convertToDto(barcodeService.getById(id));
     }
 
     @PutMapping(value = "/{id}")

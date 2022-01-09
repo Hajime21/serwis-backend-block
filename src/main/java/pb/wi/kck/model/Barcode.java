@@ -1,6 +1,7 @@
 package pb.wi.kck.model;
 
 import lombok.*;
+import pb.wi.kck.dto.BarcodeDto;
 
 import javax.persistence.*;
 
@@ -15,7 +16,7 @@ import javax.persistence.*;
 public class Barcode {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "BARCODE_ID", nullable = false)
+    @Column(name = "BARCODE_ID")
     private Integer barcodeId;
 
     @Column(name = "CODE", nullable = false, length = 30)
@@ -31,4 +32,12 @@ public class Barcode {
 //    @ManyToOne(cascade = CascadeType.ALL, optional = false)
 //    @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
 //    private FoodProductBlueprint foodProductBlueprint;
+
+
+    public Barcode(BarcodeDto barcodeDto, ProductBlueprint productBlueprint) {
+        this.barcodeId = barcodeDto.getBarcodeId();
+        this.code = barcodeDto.getCode();
+        this.type = barcodeDto.getType();
+        this.productBlueprint = productBlueprint;
+    }
 }
