@@ -12,6 +12,7 @@ public class BarcodeDto implements Serializable {
     Integer barcodeId;
     String code;
     String type;
-    ProductBlueprintDto productBlueprint;
+    Integer blueprintId;
+    //ProductBlueprintDto productBlueprint;
     //FoodProductBlueprintDto foodProductBlueprint;
 }

@@ -24,7 +24,7 @@ public class Barcode {
     @Column(name = "TYPE", nullable = false, length = 15)
     private String type;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "PRODUCT_BLUEPRINT_ID", nullable = false)
     private ProductBlueprint productBlueprint;
 

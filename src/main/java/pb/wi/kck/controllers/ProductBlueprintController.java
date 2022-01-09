@@ -34,7 +34,8 @@ public class ProductBlueprintController {
     }
 
     private ProductBlueprintDto convertToDto(ProductBlueprint productBlueprint) {
-        ProductBlueprintDto productBlueprintDTO = modelMapper.map(productBlueprint, ProductBlueprintDto.ProductBlueprintDtoBuilder.class).build();
+        //ProductBlueprintDto productBlueprintDTO = modelMapper.map(productBlueprint, ProductBlueprintDto.ProductBlueprintDtoBuilder.class).build();
+        ProductBlueprintDto productBlueprintDTO = new ProductBlueprintDto(productBlueprint);
         System.out.println("-------- PRODUCTBLUEPRINT DO ZMAPOWANIA ------");
         System.out.println(productBlueprint);
         System.out.println("-------- ZMAPOWANE DTO PRODUCTBLUEPRINTU ------");
@@ -45,18 +46,22 @@ public class ProductBlueprintController {
     }
 
     private ProductBlueprint convertToEntity(ProductBlueprintDto productBlueprintDto) throws ParseException {
-        ProductBlueprint productBlueprint = modelMapper.map(productBlueprintDto, ProductBlueprint.ProductBlueprintBuilder.class).build();
+        ProductBlueprint productBlueprint = new ProductBlueprint(productBlueprintDto);
+        //ProductBlueprint productBlueprint = modelMapper.map(productBlueprintDto, ProductBlueprint.ProductBlueprintBuilder.class).build();
         //productBlueprint.setSubmissionDate(productBlueprintDTO.getSubmissionDateConverted(userService.getCurrentUser().getPreference().getTimezone()));
         System.out.println("======== DTO PRODUCTBLUEPRINTU DO ZMAPOWANIA ======");
         System.out.println(productBlueprintDto);
         System.out.println("======== ZMAPOWANY PRODUCTBLUEPRINT ======");
         System.out.println(productBlueprint);
 
-        if (productBlueprintDto.getProductBlueprintId() != null) {
-            ProductBlueprint oldProductBlueprint = productBlueprintService.getById(productBlueprintDto.getProductBlueprintId());
-            System.out.println("CHUJ");
-            //post.setSent(oldPost.isSent());
-        }
+//        if (productBlueprintDto.getProductBlueprintId() != null) {
+//            ProductBlueprint oldProductBlueprint = productBlueprintService.getById(productBlueprintDto.getProductBlueprintId());
+//            System.out.println("CHUJ");
+//            //post.setSent(oldPost.isSent());
+//        }
+
+        //TODO: cokolwiek
+
         return productBlueprint;
     }
 
@@ -106,6 +111,11 @@ public class ProductBlueprintController {
         productBlueprintService.deleteById(id);
     }
 
+    @GetMapping(value = "/s")
+    @ResponseBody
+    public List<ProductBlueprint> findProductBlueprint(@RequestParam String name) {
+        return productBlueprintService.findByName(name);
+    }
 
 //
 //    @PutMapping(value = "/{productBlueprintId}", produces = MediaType.APPLICATION_JSON_VALUE)

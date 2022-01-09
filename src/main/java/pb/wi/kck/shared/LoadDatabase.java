@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pb.wi.kck.model.Barcode;
 import pb.wi.kck.model.Product;
 import pb.wi.kck.model.ProductBlueprint;
+import pb.wi.kck.repositories.BarcodeJpaRepository;
 import pb.wi.kck.repositories.ProductBlueprintJpaRepository;
 import pb.wi.kck.repositories.ProductJpaRepository;
 
@@ -19,9 +21,10 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(ProductBlueprintJpaRepository repository1, ProductJpaRepository repository2) {
+    CommandLineRunner initDatabase(ProductBlueprintJpaRepository repository1, ProductJpaRepository repository2, BarcodeJpaRepository repository3) {
         return args -> {
-            log.info("Preloading " + repository1.save(ProductBlueprint.builder().productBlueprintName("Domestos").manufacturer("UNILEVER").barcode("8717163350034").barcodeType("EAN-13").description("Plyn do toalet").modificationDate(LocalDateTime.now()).build()));
+            //log.info("Preloading " + repository1.save(ProductBlueprint.builder().productBlueprintName("Domestos").manufacturer("UNILEVER").barcode("8717163350034").barcodeType("EAN-13").description("Plyn do toalet").modificationDate(LocalDateTime.now()).build()));
+            log.info("Preloading " + repository3.save(Barcode.builder().code("5901234567890").type("EAN-13").productBlueprint(repository1.getById(1)).build()));
 //            pb = new ProductBlueprint(2,"4Move Vitamin Water","FOODCARE","5900552077756","EAN-13","Woda smakowa","",1, LocalDateTime.now(), null);
 //            log.info("Preloading " + repository1.save(pb));
 //            pb = new ProductBlueprint(3,"Chappi z drobiem","MARS PC","5900951252815","PDF417","Karma pełnoporcjowa","",1, LocalDateTime.now(), null);
