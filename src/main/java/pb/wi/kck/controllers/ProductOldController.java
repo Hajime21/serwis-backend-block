@@ -86,8 +86,8 @@ public class ProductOldController {
 
     @GetMapping(value = "/s")
     @ResponseBody
-    public List<ProductOldDto> findProductOld(@RequestParam String name, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        List<ProductOld> productOlds = productOldService.findAllByProductBlueprintName(name, pageNumber, pageSize);
+    public List<ProductOldDto> findProductOld(@RequestParam String str, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        List<ProductOld> productOlds = productOldService.findAllByProductBlueprintName(str, pageNumber, pageSize);
         return productOlds.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
