@@ -5,9 +5,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pb.wi.kck.dto.BarcodeDto;
 import pb.wi.kck.dto.ProductBlueprintDto;
-import pb.wi.kck.model.Barcode;
 import pb.wi.kck.model.ProductBlueprint;
 import pb.wi.kck.services.ProductBlueprintService;
 import pb.wi.kck.services.ProductService;
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/blueprints/generic")
+@RequestMapping("/api/blueprints/genericV2")
 public class ProductBlueprintController {
 
     private final ProductBlueprintService productBlueprintService;
@@ -67,7 +65,7 @@ public class ProductBlueprintController {
         return productBlueprint;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<ProductBlueprintDto> getAll() {
         List<ProductBlueprint> productBlueprints = productBlueprintService.getAll();
         return productBlueprints.stream()
