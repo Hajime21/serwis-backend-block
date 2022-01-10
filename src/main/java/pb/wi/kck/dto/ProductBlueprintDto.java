@@ -6,10 +6,11 @@ import pb.wi.kck.model.ProductBlueprint;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-//@NoArgsConstructor
 @AllArgsConstructor
-@Value //@Data
-@Builder
+@NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 public class ProductBlueprintDto implements Serializable {
     Integer productBlueprintId;
     String productBlueprintName;

@@ -37,10 +37,15 @@ public class ProductService { //implements ProductBlueprintService {
         return products;
     }
 
-    public List<Product> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    public List<Product> getPageList(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productId");
         Page<Product> products = productJpaRepository.findAll(pageReq);
+        return products.getContent();
+    }
+
+    public List<Product> findAllByProductBlueprintName(String name, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "productId");
+        Page<Product> products = productJpaRepository.findAllByProductBlueprintProductBlueprintNameContaining(name, pageReq);
         return products.getContent();
     }
 

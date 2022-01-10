@@ -15,16 +15,16 @@ public class ProductDto implements Serializable {
     private Integer productId;
     private LocalDate useByDate;
     private int quantity;
-    private Integer productBlueprint;
-    private Integer deal;
-    private Integer location;
+    private Integer productBlueprintId;
+    private Integer dealId;
+    private Integer locationId;
 
     public ProductDto(Product product, Integer productBlueprintId, Integer dealId, Integer locationId) {
         this.productId = product.getProductId();
         this.useByDate = product.getUseByDate();
         this.quantity = product.getQuantity();
-        this.productBlueprint = productBlueprintId;
-        this.deal = dealId;
-        this.location = locationId;
+        this.productBlueprintId = productBlueprintId;
+        this.dealId = dealId;
+        this.locationId = locationId;
     }
 }
