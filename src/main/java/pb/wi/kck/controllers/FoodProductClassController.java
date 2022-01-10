@@ -56,7 +56,7 @@ public class FoodProductClassController {
         return foodProductClass;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<FoodProductClassDto> getAll() {
         List<FoodProductClass> foodProductClasses = foodProductClassService.getAll();
         return foodProductClasses.stream()
@@ -101,7 +101,7 @@ public class FoodProductClassController {
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public FoodProductClassDto updateFoodProductClass(@RequestBody FoodProductClassDto foodProductClassDto, @PathVariable Integer id) throws ParseException { //produces = MediaType.APPLICATION_JSON_VALUE
-        if (foodProductClassDto.getFoodProductClassId() != null && foodProductClassDto.getFoodProductClassId() != 0 && !Objects.equals(foodProductClassDto.getFoodProductClassName(), id)) {
+        if (foodProductClassDto.getFoodProductClassId() != null && foodProductClassDto.getFoodProductClassId() != 0 && !Objects.equals(foodProductClassDto.getFoodProductClassId(), id)) {
             System.out.println("Identyfikatory FoodProductClass w requeście PUT niezgodne! - " + foodProductClassDto.getFoodProductClassId().toString() + id.toString());
         }
         FoodProductClass foodProductClass = convertToEntity(foodProductClassDto);

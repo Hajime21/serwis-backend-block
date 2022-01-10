@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pb.wi.kck.model.FoodProduct;
+import pb.wi.kck.repositories.FoodProductBlueprintJpaRepository;
 import pb.wi.kck.repositories.FoodProductJpaRepository;
 
 import java.util.List;
@@ -14,10 +15,12 @@ import java.util.List;
 public class FoodProductService { //implements ProductBlueprintService {
 
     private final FoodProductJpaRepository foodProductJpaRepository;
+    //private final FoodProductBlueprintJpaRepository foodProductBlueprintJpaRepository;
 
     @Autowired
-    public FoodProductService(FoodProductJpaRepository foodProductJpaRepository) {
+    public FoodProductService(FoodProductJpaRepository foodProductJpaRepository, FoodProductBlueprintJpaRepository foodProductBlueprintJpaRepository) {
         this.foodProductJpaRepository = foodProductJpaRepository;
+        //this.foodProductBlueprintJpaRepository = foodProductBlueprintJpaRepository;
     }
 
     public FoodProduct getById(Integer id) {
@@ -37,10 +40,18 @@ public class FoodProductService { //implements ProductBlueprintService {
         return foodProducts;
     }
 
-    public List<FoodProduct> getPageList(int page, int size, String sortDir, String sort) {
-        PageRequest pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-
+    //public List<FoodProduct> getPageList(int page, int size, String sortDir, String sort) {
+    public List<FoodProduct> getPageList(int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "foodProductId");
         Page<FoodProduct> respondedPage = foodProductJpaRepository.findAll(pageReq);
+        return respondedPage.getContent();
+    }
+
+    public List<FoodProduct> findAllByFoodProductBlueprintName(String name, int pageNumber, int pageSize) {
+        PageRequest pageReq = PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC, "foodProductId");
+        //FoodProductBlueprint foodProductBlueprint = foodProductBlueprintJpaRepository.getById(foodProductBlueprintId);
+        //Page<FoodProduct> respondedPage = foodProductJpaRepository.findAllByFoodProductBlueprint(pageReq);
+        Page<FoodProduct> respondedPage = foodProductJpaRepository.findAllByFoodProductBlueprintName(name, pageReq);
         return respondedPage.getContent();
     }
 
