@@ -22,7 +22,7 @@ public class ProductOld {
     private int quantity;
     private String location;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "PRODUCT_BLUEPRINT_WITH_BARCODE_ID", nullable = false)
     private ProductBlueprintWithBarcode productBlueprintWithBarcode;
 
