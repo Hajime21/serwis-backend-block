@@ -56,7 +56,7 @@ public class ProductBlueprintController {
 
 //        if (productBlueprintDto.getProductBlueprintId() != null) {
 //            ProductBlueprint oldProductBlueprint = productBlueprintService.getById(productBlueprintDto.getProductBlueprintId());
-//            System.out.println("CHUJ");
+//            System.out.println("ez");
 //            //post.setSent(oldPost.isSent());
 //        }
 

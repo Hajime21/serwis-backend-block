@@ -56,7 +56,7 @@ public class ProductBlueprintWithBarcodeController {
 
 //        if (ProductBlueprintWithBarcodeDto.getProductBlueprintId() != null) {
 //            ProductBlueprintWithBarcode oldProductBlueprintWithBarcode = ProductBlueprintWithBarcodeService.getById(ProductBlueprintWithBarcodeDto.getProductBlueprintId());
-//            System.out.println("CHUJ");
+//            System.out.println("ez");
 //            //post.setSent(oldPost.isSent());
 //        }
 

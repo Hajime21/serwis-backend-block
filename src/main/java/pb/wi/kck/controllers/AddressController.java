@@ -50,7 +50,7 @@ public class AddressController {
 
 //        if (barcodeDto.getBarcodeId() != null) {
 //            Barcode oldBarcode = barcodeService.getById(barcodeDto.getBarcodeId());
-//            System.out.println("CHUJ");
+//            System.out.println("ez");
 //            //post.setSent(oldPost.isSent());
 //        }
         return address;
