@@ -38,7 +38,8 @@ public class FoodProductBlueprint {
     private int carbohydrates;
 
     //TODO: nie wiem czy dobre kaskady ¯\_(ツ)_/¯
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    //@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID")
     private FoodProductClass foodProductClass;
 

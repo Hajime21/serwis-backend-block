@@ -30,11 +30,13 @@ public class Barcode {
 
     //TODO: barcode tylko na foodProductBlueprinty zrobic po BD, dodac optional=false
     //TODO: nie wiem czy dobra kaskada :/
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "PRODUCT_BLUEPRINT_ID", nullable = false)
+    //@ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_BLUEPRINT_ID")
     private ProductBlueprint productBlueprint;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    //@ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID")
     private FoodProductBlueprint foodProductBlueprint;
 

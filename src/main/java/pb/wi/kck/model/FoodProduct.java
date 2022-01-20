@@ -32,8 +32,8 @@ public class FoodProduct {
     @JoinColumn(name = "DEAL_ID", nullable = false)
     private Deal deal;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "LOCATION_ID", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
     public FoodProduct(FoodProductDto foodProductDto, FoodProductBlueprint foodProductBlueprint, Deal deal, Location location) {

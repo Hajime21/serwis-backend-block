@@ -119,7 +119,6 @@ public class DealController {
         //deal.setUser(dealOld.getUser());
         deal.setProducts(dealOld.getProducts());
         deal.setFoodProducts(dealOld.getFoodProducts());
-        deal.setProductOlds(dealOld.getProductOlds());
         dealService.update(deal);
         return convertToDto(dealService.getById(id));
     }

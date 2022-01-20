@@ -25,11 +25,14 @@ public class Company {
     private String companyName;
     private String companyNIP;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ADDRESS_ID")
     private Address address;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
     @ToString.Exclude
     private Set<Deal> deals = new LinkedHashSet<>();
 

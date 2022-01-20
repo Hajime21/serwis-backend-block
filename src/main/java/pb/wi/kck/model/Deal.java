@@ -37,16 +37,14 @@ public class Deal {
     private Company company;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "deal")
     @ToString.Exclude
     private Set<Product> products = new LinkedHashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "deal")
     @ToString.Exclude
     private Set<FoodProduct> foodProducts = new LinkedHashSet<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private Set<ProductOld> productOlds = new LinkedHashSet<>();
 
 //    @ManyToOne(cascade = CascadeType.ALL, optional = false)
 //    @JoinColumn(name = "COMPANY_ID", nullable = false)

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.ProductBlueprintDto;
 import pb.wi.kck.model.ProductBlueprint;
-import pb.wi.kck.model.ProductOld;
 import pb.wi.kck.services.ProductBlueprintService;
 import pb.wi.kck.services.ProductService;
 
