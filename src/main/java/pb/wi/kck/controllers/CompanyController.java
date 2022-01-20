@@ -48,7 +48,13 @@ public class CompanyController {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO COMPANY DO ZMAPOWANIA ======");
         System.out.println(companyDto);
-        Company company = new Company(companyDto, addressService.getById(companyDto.getAddressId()));
+        Company company = new Company();
+        if(companyDto.getAddressId() != null) {
+            company = new Company(companyDto, addressService.getById(companyDto.getAddressId()));
+        } else {
+            company = new Company(companyDto, null);
+        }
+
         System.out.println("======== ZMAPOWANA COMPANY ======");
         System.out.println(company);
 

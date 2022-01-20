@@ -6,6 +6,7 @@ import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.ProductDto;
+import pb.wi.kck.model.FoodProduct;
 import pb.wi.kck.model.Product;
 import pb.wi.kck.services.DealService;
 import pb.wi.kck.services.LocationService;
@@ -56,7 +57,12 @@ public class ProductController {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO Product DO ZMAPOWANIA ======");
         System.out.println(productDto);
-        Product product = new Product(productDto, productBlueprintService.getById(productDto.getProductBlueprintId()), dealService.getById(productDto.getDealId()), locationService.getById(productDto.getLocationId()));
+        Product product = new Product();
+        if(productDto.getLocationId() != null) {
+            product = new Product(productDto, productBlueprintService.getById(productDto.getProductBlueprintId()), dealService.getById(productDto.getDealId()), locationService.getById(productDto.getLocationId()));
+        } else {
+            product = new Product(productDto, productBlueprintService.getById(productDto.getProductBlueprintId()), dealService.getById(productDto.getDealId()), null);
+        }
         System.out.println("======== ZMAPOWANY Product ======");
         System.out.println(product);
 
