@@ -23,9 +23,8 @@ public class FoodProductBlueprintDto implements Serializable {
     private int protein;
     private int fat;
     private int carbohydrates;
-    private Integer foodProductClassId;
 
-    public FoodProductBlueprintDto(FoodProductBlueprint foodProductBlueprint, Integer foodProductClassId) {
+    public FoodProductBlueprintDto(FoodProductBlueprint foodProductBlueprint) {
         this.foodProductBlueprintId = foodProductBlueprint.getFoodProductBlueprintId();
         this.name = foodProductBlueprint.getName();
         this.manufacturer = foodProductBlueprint.getManufacturer();
@@ -37,6 +36,5 @@ public class FoodProductBlueprintDto implements Serializable {
         this.protein = foodProductBlueprint.getProtein();
         this.fat = foodProductBlueprint.getFat();
         this.carbohydrates = foodProductBlueprint.getCarbohydrates();
-        this.foodProductClassId = foodProductClassId;
     }
 }

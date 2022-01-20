@@ -38,11 +38,6 @@ public class FoodProductBlueprint {
     private int carbohydrates;
 
     //TODO: nie wiem czy dobre kaskady ¯\_(ツ)_/¯
-    //@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @ManyToOne
-    @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID")
-    private FoodProductClass foodProductClass;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "foodProductBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private Set<FoodProduct> foodProducts = new LinkedHashSet<>();
@@ -51,11 +46,7 @@ public class FoodProductBlueprint {
     @ToString.Exclude
     private Set<Barcode> barcodes = new LinkedHashSet<>();
 
-//    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-//    @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID", nullable = false)
-//    private FoodProductClass foodProductClass;
-
-    public FoodProductBlueprint(FoodProductBlueprintDto foodProductBlueprintDto, FoodProductClass foodProductClass) {
+    public FoodProductBlueprint(FoodProductBlueprintDto foodProductBlueprintDto) {
         this.foodProductBlueprintId = foodProductBlueprintDto.getFoodProductBlueprintId();
         this.name = foodProductBlueprintDto.getName();
         this.manufacturer = foodProductBlueprintDto.getManufacturer();
@@ -67,7 +58,6 @@ public class FoodProductBlueprint {
         this.protein = foodProductBlueprintDto.getProtein();
         this.fat = foodProductBlueprintDto.getFat();
         this.carbohydrates = foodProductBlueprintDto.getCarbohydrates();
-        this.foodProductClass = foodProductClass;
     }
 
     @Override

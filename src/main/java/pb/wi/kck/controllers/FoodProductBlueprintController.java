@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.FoodProductBlueprintDto;
 import pb.wi.kck.model.FoodProductBlueprint;
 import pb.wi.kck.services.FoodProductBlueprintService;
-import pb.wi.kck.services.FoodProductClassService;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,13 +19,10 @@ public class FoodProductBlueprintController {
 
     private final FoodProductBlueprintService foodProductBlueprintService;
 
-    private final FoodProductClassService foodProductClassService;
-
     private final ModelMapper modelMapper;
 
-    FoodProductBlueprintController(FoodProductBlueprintService foodProductBlueprintService, FoodProductClassService foodProductClassService, ModelMapper modelMapper) {
+    FoodProductBlueprintController(FoodProductBlueprintService foodProductBlueprintService, ModelMapper modelMapper) {
         this.foodProductBlueprintService = foodProductBlueprintService;
-        this.foodProductClassService = foodProductClassService;
         this.modelMapper = modelMapper;
         this.modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
@@ -38,7 +34,7 @@ public class FoodProductBlueprintController {
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
         System.out.println(foodProductBlueprint);
-        FoodProductBlueprintDto foodProductBlueprintDto = new FoodProductBlueprintDto(foodProductBlueprint, foodProductBlueprint.getFoodProductClass().getFoodProductClassId());
+        FoodProductBlueprintDto foodProductBlueprintDto = new FoodProductBlueprintDto(foodProductBlueprint);
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
         System.out.println(foodProductBlueprintDto);
         return foodProductBlueprintDto;
@@ -48,7 +44,7 @@ public class FoodProductBlueprintController {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO DEALA DO ZMAPOWANIA ======");
         System.out.println(foodProductBlueprintDto);
-        FoodProductBlueprint foodProductBlueprint = new FoodProductBlueprint(foodProductBlueprintDto, foodProductClassService.getById(foodProductBlueprintDto.getFoodProductClassId()));
+        FoodProductBlueprint foodProductBlueprint = new FoodProductBlueprint(foodProductBlueprintDto);
         System.out.println("======== ZMAPOWANY DEAL ======");
         System.out.println(foodProductBlueprint);
 
