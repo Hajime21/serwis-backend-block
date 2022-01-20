@@ -28,11 +28,11 @@ public class FoodProduct {
     @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
     private FoodProductBlueprint foodProductBlueprint;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "DEAL_ID", nullable = false)
     private Deal deal;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "LOCATION_ID", nullable = false)
     private Location location;
 
