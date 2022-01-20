@@ -56,7 +56,12 @@ public class FoodProductController {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO FoodProduct DO ZMAPOWANIA ======");
         System.out.println(foodProductDto);
-        FoodProduct foodProduct = new FoodProduct(foodProductDto, foodProductBlueprintService.getById(foodProductDto.getFoodProductBlueprintId()), dealService.getById(foodProductDto.getDealId()), locationService.getById(foodProductDto.getLocationId()));
+        FoodProduct foodProduct = new FoodProduct();
+        if(foodProductDto.getLocationId() != null) {
+            foodProduct = new FoodProduct(foodProductDto, foodProductBlueprintService.getById(foodProductDto.getFoodProductBlueprintId()), dealService.getById(foodProductDto.getDealId()), locationService.getById(foodProductDto.getLocationId()));
+        } else {
+            foodProduct = new FoodProduct(foodProductDto, foodProductBlueprintService.getById(foodProductDto.getFoodProductBlueprintId()), dealService.getById(foodProductDto.getDealId()), null);
+        }
         System.out.println("======== ZMAPOWANY FoodProduct ======");
         System.out.println(foodProduct);
 
