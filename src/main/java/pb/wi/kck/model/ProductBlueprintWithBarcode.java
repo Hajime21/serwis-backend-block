@@ -19,7 +19,10 @@ import java.util.Set;
 @Builder
 @Entity
 public class ProductBlueprintWithBarcode {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer productBlueprintId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_blueprint_with_barcode_generator")
+    @SequenceGenerator(name = "product_blueprint_with_barcode_generator", sequenceName = "product_blueprint_with_barcode_seq")
+    private Integer productBlueprintId;
     private String productBlueprintName;
     private String manufacturer;
     private String description;

@@ -4,10 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import pb.wi.kck.dto.AddressDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -19,7 +16,10 @@ import java.util.Objects;
 @Builder
 @Entity
 public class Address {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer addressId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_generator")
+    @SequenceGenerator(name = "address_generator", sequenceName = "address_seq")
+    private Integer addressId;
     private String country;
     private String city;
     private String street;

@@ -17,7 +17,10 @@ import java.util.Objects;
 @Builder
 @Entity
 public class Product {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
+    @SequenceGenerator(name = "product_generator", sequenceName = "product_seq")
+    private Integer productId;
     private LocalDate useByDate;
     private int quantity;
 

@@ -18,7 +18,10 @@ import java.util.Set;
 @Builder
 @Entity
 public class User {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq")
+    private Integer userId;
     private String login;
     private String password;
     private String email;

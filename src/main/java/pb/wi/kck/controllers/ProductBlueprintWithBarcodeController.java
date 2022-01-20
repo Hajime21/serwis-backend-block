@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/blueprints/generic")
+@RequestMapping("/api/blueprints/old")
 public class ProductBlueprintWithBarcodeController {
 
     private final ProductBlueprintWithBarcodeService ProductBlueprintWithBarcodeService;

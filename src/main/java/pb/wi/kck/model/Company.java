@@ -18,7 +18,10 @@ import java.util.Set;
 @Builder
 @Entity
 public class Company {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer companyId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_generator")
+    @SequenceGenerator(name = "company_generator", sequenceName = "company_seq")
+    private Integer companyId;
     private String companyName;
     private String companyNIP;
 

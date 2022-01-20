@@ -20,7 +20,10 @@ import java.util.Set;
 @Builder
 @Entity
 public class Deal {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer dealId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deal_generator")
+    @SequenceGenerator(name = "deal_generator", sequenceName = "deal_seq")
+    private Integer dealId;
     private LocalDate purchaseDate;
     private BigDecimal purchaseValue;
     private String documentName;

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/blueprints/genericV2")
+@RequestMapping("/api/blueprints/generic")
 public class ProductBlueprintController {
 
     private final ProductBlueprintService productBlueprintService;

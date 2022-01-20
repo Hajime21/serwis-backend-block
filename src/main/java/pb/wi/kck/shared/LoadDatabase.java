@@ -15,6 +15,7 @@ import pb.wi.kck.repositories.ProductJpaRepository;
 import pb.wi.kck.services.BarcodeService;
 import pb.wi.kck.services.ProductBlueprintService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 

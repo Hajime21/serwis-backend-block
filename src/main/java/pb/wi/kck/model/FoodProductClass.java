@@ -18,7 +18,10 @@ import java.util.Set;
 @Builder
 @Entity
 public class FoodProductClass {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductClassId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_product_class_generator")
+    @SequenceGenerator(name = "food_product_class_generator", sequenceName = "food_product_class_seq")
+    private Integer foodProductClassId;
     private String foodProductClassName;
     private int desiredQuantity;
 

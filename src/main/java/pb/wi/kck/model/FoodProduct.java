@@ -17,7 +17,10 @@ import java.util.Objects;
 @Builder
 @Entity
 public class FoodProduct {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_product_generator")
+    @SequenceGenerator(name = "food_product_generator", sequenceName = "food_product_seq")
+    private Integer foodProductId;
     private LocalDate useByDate;
     private int quantity;
 

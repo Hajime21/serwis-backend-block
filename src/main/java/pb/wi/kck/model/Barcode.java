@@ -17,7 +17,8 @@ import java.util.Objects;
 @Entity
 public class Barcode {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "barcode_generator")
+    @SequenceGenerator(name = "barcode_generator", sequenceName = "barcode_seq")
     @Column(name = "BARCODE_ID")
     private Integer barcodeId;
 

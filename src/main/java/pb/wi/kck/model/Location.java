@@ -4,10 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import pb.wi.kck.dto.LocationDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -19,7 +16,10 @@ import java.util.Objects;
 @Builder
 @Entity
 public class Location {
-    private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer locationId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_generator")
+    @SequenceGenerator(name = "location_generator", sequenceName = "location_seq")
+    private Integer locationId;
     private String locationName;
 
     public Location(LocationDto locationDto) {

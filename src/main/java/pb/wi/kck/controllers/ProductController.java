@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/products/genericV2")
+@RequestMapping("/api/products/generic")
 public class ProductController {
 
     private final ProductService productService;
