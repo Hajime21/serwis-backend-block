@@ -114,6 +114,12 @@ public class DealController {
             System.out.println("Identyfikatory kodu kreskowego w requeście PUT niezgodne! - " + dealDto.getDealId().toString() + id.toString());
         }
         Deal deal = convertToEntity(dealDto);
+        Deal dealOld = dealService.getById(deal.getDealId());
+        //deal.setCompany(dealOld.getCompany());
+        //deal.setUser(dealOld.getUser());
+        deal.setProducts(dealOld.getProducts());
+        deal.setFoodProducts(dealOld.getFoodProducts());
+        deal.setProductOlds(dealOld.getProductOlds());
         dealService.update(deal);
         return convertToDto(dealService.getById(id));
     }

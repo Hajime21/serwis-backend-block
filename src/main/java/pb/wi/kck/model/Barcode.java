@@ -27,9 +27,15 @@ public class Barcode {
     @Column(name = "TYPE", nullable = false, length = 15)
     private String type;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
+    //TODO: barcode tylko na foodProductBlueprinty zrobic po BD, dodac optional=false
+    //TODO: nie wiem czy dobra kaskada :/
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PRODUCT_BLUEPRINT_ID", nullable = false)
     private ProductBlueprint productBlueprint;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID")
+    private FoodProductBlueprint foodProductBlueprint;
 
 //    @ManyToOne(cascade = CascadeType.ALL, optional = false)
 //    @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
@@ -41,6 +47,15 @@ public class Barcode {
         this.code = barcodeDto.getCode();
         this.type = barcodeDto.getType();
         this.productBlueprint = productBlueprint;
+        this.foodProductBlueprint = null;
+    }
+
+    public Barcode(BarcodeDto barcodeDto, FoodProductBlueprint foodProductBlueprint) {
+        this.barcodeId = barcodeDto.getBarcodeId();
+        this.code = barcodeDto.getCode();
+        this.type = barcodeDto.getType();
+        this.productBlueprint = null;
+        this.foodProductBlueprint = foodProductBlueprint;
     }
 
     @Override

@@ -5,7 +5,9 @@ import org.hibernate.Hibernate;
 import pb.wi.kck.dto.CompanyDto;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,9 +22,17 @@ public class Company {
     private String companyName;
     private String companyNIP;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "ADDRESS_ID", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ADDRESS_ID")
     private Address address;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Deal> deals = new LinkedHashSet<>();
+
+//    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+//    @JoinColumn(name = "ADDRESS_ID", nullable = false)
+//    private Address address;
 
     public Company(CompanyDto companyDto, Address address) {
         this.companyId = companyDto.getCompanyId();
@@ -30,6 +40,7 @@ public class Company {
         this.companyNIP = companyDto.getCompanyNIP();
         this.address = address;
     }
+
 
     @Override
     public boolean equals(Object o) {

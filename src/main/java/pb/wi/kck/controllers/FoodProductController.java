@@ -117,6 +117,10 @@ public class FoodProductController {
             System.out.println("Identyfikatory kodu kreskowego w requeście PUT niezgodne! - " + foodProductDto.getFoodProductId().toString() + id.toString());
         }
         FoodProduct foodProduct = convertToEntity(foodProductDto);
+        FoodProduct foodProductOld = foodProductService.getById(foodProductDto.getFoodProductId());
+        //foodProduct.setFoodProductBlueprint(foodProductOld.getFoodProductBlueprint());
+        //foodProduct.setDeal(foodProductOld.getDeal());
+        //foodProduct.setLocation(foodProductOld.getLocation());
         foodProductService.update(foodProduct);
         return convertToDto(foodProductService.getById(id));
     }

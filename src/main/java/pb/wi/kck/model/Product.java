@@ -21,15 +21,15 @@ public class Product {
     private LocalDate useByDate;
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "PRODUCT_BLUEPRINT_ID", nullable = false)
     private ProductBlueprint productBlueprint;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "DEAL_ID", nullable = false)
     private Deal deal;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "LOCATION_ID", nullable = false)
     private Location location;
 

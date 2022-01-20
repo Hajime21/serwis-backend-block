@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.ProductOldDto;
 import pb.wi.kck.model.ProductOld;
+import pb.wi.kck.services.DealService;
 import pb.wi.kck.services.ProductBlueprintWithBarcodeService;
 import pb.wi.kck.services.ProductOldService;
 
@@ -22,11 +23,14 @@ public class ProductOldController {
 
     private final ProductBlueprintWithBarcodeService productBlueprintWithBarcodeService;
 
+    private final DealService dealService;
+
     private final ModelMapper modelMapper;
 
-    ProductOldController(ProductOldService productOldService, ProductBlueprintWithBarcodeService productBlueprintWithBarcodeService, ModelMapper modelMapper) {
+    ProductOldController(ProductOldService productOldService, ProductBlueprintWithBarcodeService productBlueprintWithBarcodeService, DealService dealService, ModelMapper modelMapper) {
         this.productOldService = productOldService;
         this.productBlueprintWithBarcodeService = productBlueprintWithBarcodeService;
+        this.dealService = dealService;
         this.modelMapper = modelMapper;
         this.modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
@@ -38,7 +42,7 @@ public class ProductOldController {
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
         System.out.println(productOld);
-        ProductOldDto productOldDto = new ProductOldDto(productOld, productOld.getProductBlueprintWithBarcode().getProductBlueprintId());
+        ProductOldDto productOldDto = new ProductOldDto(productOld, productOld.getProductBlueprintWithBarcode().getProductBlueprintId(), productOld.getDeal().getDealId());
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
         System.out.println(productOldDto);
         return productOldDto;
@@ -48,7 +52,7 @@ public class ProductOldController {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO Product DO ZMAPOWANIA ======");
         System.out.println(productOldDto);
-        ProductOld productOld = new ProductOld(productOldDto, productBlueprintWithBarcodeService.getById(productOldDto.getProductBlueprintWithBarcodeId()));
+        ProductOld productOld = new ProductOld(productOldDto, productBlueprintWithBarcodeService.getById(productOldDto.getProductBlueprintWithBarcodeId()), dealService.getById(productOldDto.getDealId()));
         System.out.println("======== ZMAPOWANY Product ======");
         System.out.println(productOld);
 
@@ -109,6 +113,8 @@ public class ProductOldController {
             System.out.println("Identyfikatory produktu w requeście PUT niezgodne! - " + productOldDto.getProductId().toString() + id.toString());
         }
         ProductOld productOld = convertToEntity(productOldDto);
+//        ProductOld olderProductOld = productOldService.getById(productOldDto.getProductId());
+//        productOld.set
         productOldService.update(productOld);
         return convertToDto(productOldService.getById(id));
     }

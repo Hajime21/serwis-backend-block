@@ -4,12 +4,11 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import pb.wi.kck.dto.ProductBlueprintDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,6 +25,14 @@ public class ProductBlueprint {
     private String description;
     private String imgPath;
     private LocalDateTime modificationDate;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Product> products = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Barcode> barcodes = new LinkedHashSet<>();
 
     public ProductBlueprint(ProductBlueprintDto productBlueprintDto) {
         this.productBlueprintId = productBlueprintDto.getProductBlueprintId();

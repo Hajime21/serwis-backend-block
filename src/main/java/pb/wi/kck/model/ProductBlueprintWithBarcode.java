@@ -2,15 +2,13 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import pb.wi.kck.dto.ProductBlueprintDto;
 import pb.wi.kck.dto.ProductBlueprintWithBarcodeDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +27,10 @@ public class ProductBlueprintWithBarcode {
     private LocalDateTime modificationDate;
     private String barcode;
     private String barcodeType;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productBlueprintWithBarcode", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<ProductOld> productOlds = new LinkedHashSet<>();
 
     public ProductBlueprintWithBarcode(ProductBlueprintWithBarcodeDto productBlueprintWithBarcodeDto) {
         this.productBlueprintId = productBlueprintWithBarcodeDto.getProductBlueprintId();

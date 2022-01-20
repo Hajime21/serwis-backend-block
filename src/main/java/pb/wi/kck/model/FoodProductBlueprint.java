@@ -6,7 +6,9 @@ import pb.wi.kck.dto.FoodProductBlueprintDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,9 +34,22 @@ public class FoodProductBlueprint {
     private int fat;
     private int carbohydrates;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID", nullable = false)
+    //TODO: nie wiem czy dobre kaskady ¯\_(ツ)_/¯
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID")
     private FoodProductClass foodProductClass;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "foodProductBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<FoodProduct> foodProducts = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "foodProductBlueprint", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Barcode> barcodes = new LinkedHashSet<>();
+
+//    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+//    @JoinColumn(name = "FOOD_PRODUCT_CLASS_ID", nullable = false)
+//    private FoodProductClass foodProductClass;
 
     public FoodProductBlueprint(FoodProductBlueprintDto foodProductBlueprintDto, FoodProductClass foodProductClass) {
         this.foodProductBlueprintId = foodProductBlueprintDto.getFoodProductBlueprintId();

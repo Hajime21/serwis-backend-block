@@ -21,7 +21,7 @@ public class FoodProduct {
     private LocalDate useByDate;
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "FOOD_PRODUCT_BLUEPRINT_ID", nullable = false)
     private FoodProductBlueprint foodProductBlueprint;
 

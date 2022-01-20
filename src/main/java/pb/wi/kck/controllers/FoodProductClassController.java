@@ -105,6 +105,8 @@ public class FoodProductClassController {
             System.out.println("Identyfikatory FoodProductClass w requeście PUT niezgodne! - " + foodProductClassDto.getFoodProductClassId().toString() + id.toString());
         }
         FoodProductClass foodProductClass = convertToEntity(foodProductClassDto);
+        FoodProductClass foodProductClassOld = foodProductClassService.getById(foodProductClassDto.getFoodProductClassId());
+        foodProductClass.setFoodProductBlueprints(foodProductClassOld.getFoodProductBlueprints());
         foodProductClassService.update(foodProductClass);
         return convertToDto(foodProductClassService.getById(id));
     }

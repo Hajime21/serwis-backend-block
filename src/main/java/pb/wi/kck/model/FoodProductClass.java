@@ -4,11 +4,10 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import pb.wi.kck.dto.FoodProductClassDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,6 +21,10 @@ public class FoodProductClass {
     private @Id @GeneratedValue(strategy = GenerationType.SEQUENCE) Integer foodProductClassId;
     private String foodProductClassName;
     private int desiredQuantity;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "foodProductClass")
+    @ToString.Exclude
+    private Set<FoodProductBlueprint> foodProductBlueprints = new LinkedHashSet<>();
 
     public FoodProductClass(FoodProductClassDto foodProductClassDto) {
         this.foodProductClassId = foodProductClassDto.getFoodProductClassId();

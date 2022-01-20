@@ -26,12 +26,17 @@ public class ProductOld {
     @JoinColumn(name = "PRODUCT_BLUEPRINT_WITH_BARCODE_ID", nullable = false)
     private ProductBlueprintWithBarcode productBlueprintWithBarcode;
 
-    public ProductOld(ProductOldDto productOldDto, ProductBlueprintWithBarcode productBlueprintWithBarcode) {
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "DEAL_ID", nullable = false)
+    private Deal deal;
+
+    public ProductOld(ProductOldDto productOldDto, ProductBlueprintWithBarcode productBlueprintWithBarcode, Deal deal) {
         this.productId = productOldDto.getProductId();
         this.useByDate = productOldDto.getUseByDate();
         this.quantity = productOldDto.getQuantity();
         this.location = productOldDto.getLocation();
         this.productBlueprintWithBarcode = productBlueprintWithBarcode;
+        this.deal = deal;
     }
 
     @Override

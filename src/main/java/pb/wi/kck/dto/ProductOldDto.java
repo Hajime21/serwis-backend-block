@@ -17,12 +17,14 @@ public class ProductOldDto implements Serializable {
     private int quantity;
     private String location;
     private Integer productBlueprintWithBarcodeId;
+    private Integer dealId;
 
-    public ProductOldDto(ProductOld productOld, Integer productBlueprintWithBarcodeId) {
+    public ProductOldDto(ProductOld productOld, Integer productBlueprintWithBarcodeId, Integer dealId) {
         this.productId = productOld.getProductId();
         this.useByDate = productOld.getUseByDate();
         this.quantity = productOld.getQuantity();
         this.location = productOld.getLocation();
         this.productBlueprintWithBarcodeId = productBlueprintWithBarcodeId;
+        this.dealId = dealId;
     }
 }

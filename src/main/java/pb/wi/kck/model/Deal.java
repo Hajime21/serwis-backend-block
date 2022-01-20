@@ -2,13 +2,14 @@ package pb.wi.kck.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import pb.wi.kck.dto.CompanyDto;
 import pb.wi.kck.dto.DealDto;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,13 +25,29 @@ public class Deal {
     private BigDecimal purchaseValue;
     private String documentName;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "COMPANY_ID", nullable = false)
     private Company company;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Product> products = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<FoodProduct> foodProducts = new LinkedHashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<ProductOld> productOlds = new LinkedHashSet<>();
+
+//    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+//    @JoinColumn(name = "COMPANY_ID", nullable = false)
+//    private Company company;
 
     public Deal(DealDto dealDto, Company company, User user) {
         this.dealId = dealDto.getDealId();

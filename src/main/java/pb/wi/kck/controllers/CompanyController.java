@@ -106,6 +106,10 @@ public class CompanyController {
             System.out.println("Identyfikatory company w requeście PUT niezgodne! - " + companyDto.getCompanyId().toString() + id.toString());
         }
         Company company = convertToEntity(companyDto);
+        Company companyOld = companyService.getById(company.getCompanyId());
+        //company.setAddress(addressService.getById(companyOld.getAddress().getAddressId()));
+        company.setDeals(companyOld.getDeals());
+        //TODO: ciekawe czy to ^ dziala xd
         companyService.update(company);
         return convertToDto(companyService.getById(id));
     }

@@ -105,6 +105,8 @@ public class UserController {
             System.out.println("Identyfikatory usera w requeście PUT niezgodne! - " + userDto.getUserId().toString() + id.toString());
         }
         User user = convertToEntity(userDto);
+        User userOld = userService.getById(userDto.getUserId());
+        user.setDeals(userOld.getDeals());
         userService.update(user);
         return convertToDto(userService.getById(id));
     }

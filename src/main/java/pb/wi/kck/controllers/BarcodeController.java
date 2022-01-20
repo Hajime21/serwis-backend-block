@@ -8,25 +8,32 @@ import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.BarcodeDto;
 import pb.wi.kck.model.Barcode;
 import pb.wi.kck.services.BarcodeService;
+import pb.wi.kck.services.FoodProductBlueprintService;
 import pb.wi.kck.services.ProductBlueprintService;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static pb.wi.kck.dto.BarcodeDto.barcodeDtoFromFoodProductBlueprint;
+import static pb.wi.kck.dto.BarcodeDto.barcodeDtoFromGenericProductBlueprint;
+
 @RestController
 @RequestMapping("/api/barcodes")
 public class BarcodeController {
 
+    private final BarcodeService barcodeService;
+
     private final ProductBlueprintService productBlueprintService;
 
-    private final BarcodeService barcodeService;
+    private final FoodProductBlueprintService foodProductBlueprintService;
 
     private final ModelMapper modelMapper;
 
-    BarcodeController(ProductBlueprintService productBlueprintService, BarcodeService barcodeService, ModelMapper modelMapper) {
+    BarcodeController(BarcodeService barcodeService, ProductBlueprintService productBlueprintService, FoodProductBlueprintService foodProductBlueprintService, ModelMapper modelMapper) {
         this.barcodeService = barcodeService;
         this.productBlueprintService = productBlueprintService;
+        this.foodProductBlueprintService = foodProductBlueprintService;
         this.modelMapper = modelMapper;
         this.modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STRICT)
@@ -34,11 +41,22 @@ public class BarcodeController {
                 .setDestinationNameTransformer(LombokBuilderNameTransformer.INSTANCE);
     }
 
-    private BarcodeDto convertToDto(Barcode barcode) {
+    private BarcodeDto convertToDto(Barcode barcode) { //TODO: wyczysc
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
         System.out.println(barcode);
-        BarcodeDto barcodeDto = new BarcodeDto(barcode, barcode.getProductBlueprint().getProductBlueprintId());
+        BarcodeDto barcodeDto = new BarcodeDto();
+        if(barcode.getProductBlueprint() != null && barcode.getFoodProductBlueprint() == null) {
+            barcodeDto = barcodeDtoFromGenericProductBlueprint(barcode, barcode.getProductBlueprint().getProductBlueprintId());
+            System.out.println("-------- ZMAPOWANE DTO OBIEKTU W IFIE ------");
+            System.out.println(barcodeDto);
+        } else if (barcode.getFoodProductBlueprint() != null && barcode.getProductBlueprint() == null) {
+            barcodeDto = barcodeDtoFromFoodProductBlueprint(barcode, barcode.getFoodProductBlueprint().getFoodProductBlueprintId());
+            System.out.println("-------- ZMAPOWANE DTO OBIEKTU W IFIE ------");
+            System.out.println(barcodeDto);
+        } else {
+            System.out.println("---BLAD--- -> Konwertowany do Dto obiekt Barcode nie ma prawidlowego Blueprintu!");
+        }
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
         System.out.println(barcodeDto);
         return barcodeDto;
@@ -48,7 +66,14 @@ public class BarcodeController {
         //Barcode barcode = modelMapper.map(barcodeDto, Barcode.BarcodeBuilder.class).build();
         System.out.println("======== DTO BARCODE'U DO ZMAPOWANIA ======");
         System.out.println(barcodeDto);
-        Barcode barcode = new Barcode(barcodeDto, productBlueprintService.getById(barcodeDto.getProductBlueprintId()));
+        Barcode barcode = new Barcode();
+        if(barcodeDto.getProductBlueprintId() != 0 && barcodeDto.getFoodProductBlueprintId() == 0) {
+            barcode = new Barcode(barcodeDto, productBlueprintService.getById(barcodeDto.getProductBlueprintId()));
+        } else if (barcodeDto.getFoodProductBlueprintId() != 0 && barcodeDto.getProductBlueprintId() == 0) {
+            barcode = new Barcode(barcodeDto, foodProductBlueprintService.getById(barcodeDto.getFoodProductBlueprintId()));
+        } else {
+            System.out.println("---BLAD--- -> Konwertowany do Dto obiekt Barcode nie ma prawidlowego Blueprintu!");
+        }
         System.out.println("======== ZMAPOWANY BARCODE ======");
         System.out.println(barcode);
 

@@ -4,11 +4,10 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import pb.wi.kck.dto.UserDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,6 +22,10 @@ public class User {
     private String login;
     private String password;
     private String email;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private Set<Deal> deals = new LinkedHashSet<>();
 
     public User(UserDto userDto) {
         this.userId = userDto.getUserId();

@@ -117,6 +117,8 @@ public class ProductController {
             System.out.println("Identyfikatory produktu w requeście PUT niezgodne! - " + productDto.getProductId().toString() + id.toString());
         }
         Product product = convertToEntity(productDto);
+//        Product productOld = productService.getById(productDto.getProductId());
+//        product.setProductBlueprint(productBlueprintService.getById(productOld.getProductBlueprint()));
         productService.update(product);
         return convertToDto(productService.getById(id));
     }
