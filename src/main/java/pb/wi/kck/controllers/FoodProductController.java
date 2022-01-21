@@ -46,7 +46,7 @@ public class FoodProductController {
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
         System.out.println(foodProduct);
-        FoodProductDto foodProductDto = new FoodProductDto(foodProduct, foodProduct.getFoodProductBlueprint().getFoodProductBlueprintId(), foodProduct.getDeal().getDealId(), foodProduct.getLocation().getLocationId());
+        FoodProductDto foodProductDto = new FoodProductDto(foodProduct, foodProduct.getFoodProductBlueprint().getFoodProductBlueprintId(), foodProduct.getDeal().getDealId(), foodProduct.getLocation() != null ? foodProduct.getLocation().getLocationId() : null);
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
         System.out.println(foodProductDto);
         return foodProductDto;

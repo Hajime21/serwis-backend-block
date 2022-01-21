@@ -6,7 +6,6 @@ import org.springframework.expression.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pb.wi.kck.dto.ProductDto;
-import pb.wi.kck.model.FoodProduct;
 import pb.wi.kck.model.Product;
 import pb.wi.kck.services.DealService;
 import pb.wi.kck.services.LocationService;
@@ -47,7 +46,7 @@ public class ProductController {
         //BarcodeDto barcodeDto = modelMapper.map(barcode, BarcodeDto.BarcodeDtoBuilder.class).build();
         System.out.println("-------- OBIEKT DO ZMAPOWANIA ------");
         System.out.println(product);
-        ProductDto productDto = new ProductDto(product, product.getProductBlueprint().getProductBlueprintId(), product.getDeal().getDealId(), product.getLocation().getLocationId());
+        ProductDto productDto = new ProductDto(product, product.getProductBlueprint().getProductBlueprintId(), product.getDeal().getDealId(), product.getLocation() != null ? product.getLocation().getLocationId() : null);
         System.out.println("-------- ZMAPOWANE DTO OBIEKTU ------");
         System.out.println(productDto);
         return productDto;
