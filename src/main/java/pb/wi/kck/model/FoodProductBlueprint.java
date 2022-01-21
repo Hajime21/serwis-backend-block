@@ -21,7 +21,7 @@ import java.util.Set;
 public class FoodProductBlueprint {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_product_blueprint_generator")
-    @SequenceGenerator(name = "food_product_blueprint_generator", sequenceName = "food_product_blueprint_seq")
+    @SequenceGenerator(name = "food_product_blueprint_generator", sequenceName = "food_product_blueprint_seq", initialValue = 50)
     private Integer foodProductBlueprintId;
     private String name;
     private String manufacturer;

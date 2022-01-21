@@ -20,7 +20,7 @@ import java.util.Set;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "company_generator")
-    @SequenceGenerator(name = "company_generator", sequenceName = "company_seq")
+    @SequenceGenerator(name = "company_generator", sequenceName = "company_seq", initialValue = 50)
     private Integer companyId;
     private String companyName;
     private String companyNIP;

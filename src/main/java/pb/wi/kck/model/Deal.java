@@ -22,7 +22,7 @@ import java.util.Set;
 public class Deal {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "deal_generator")
-    @SequenceGenerator(name = "deal_generator", sequenceName = "deal_seq")
+    @SequenceGenerator(name = "deal_generator", sequenceName = "deal_seq", initialValue = 50)
     private Integer dealId;
     private LocalDate purchaseDate;
     private BigDecimal purchaseValue;

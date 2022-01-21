@@ -20,7 +20,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_generator")
-    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq")
+    @SequenceGenerator(name = "user_generator", sequenceName = "user_seq", initialValue = 10)
     private Integer userId;
     private String login;
     private String password;

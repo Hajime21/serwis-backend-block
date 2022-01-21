@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_generator")
-    @SequenceGenerator(name = "location_generator", sequenceName = "location_seq")
+    @SequenceGenerator(name = "location_generator", sequenceName = "location_seq", initialValue = 50)
     private Integer locationId;
     private String locationName;
 

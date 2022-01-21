@@ -18,7 +18,7 @@ import java.util.Objects;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_generator")
-    @SequenceGenerator(name = "address_generator", sequenceName = "address_seq")
+    @SequenceGenerator(name = "address_generator", sequenceName = "address_seq", initialValue = 50)
     private Integer addressId;
     private String country;
     private String city;

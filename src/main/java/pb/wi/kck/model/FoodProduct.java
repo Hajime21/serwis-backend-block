@@ -19,7 +19,7 @@ import java.util.Objects;
 public class FoodProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "food_product_generator")
-    @SequenceGenerator(name = "food_product_generator", sequenceName = "food_product_seq")
+    @SequenceGenerator(name = "food_product_generator", sequenceName = "food_product_seq", initialValue = 50)
     private Integer foodProductId;
     private LocalDate useByDate;
     private int quantity;
