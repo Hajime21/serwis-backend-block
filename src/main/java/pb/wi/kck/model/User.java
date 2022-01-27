@@ -25,6 +25,7 @@ public class User {
     private String login;
     private String password;
     private String email;
+    @Enumerated(EnumType.ORDINAL) private PermissionLevel permissionLevel;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
@@ -35,6 +36,7 @@ public class User {
         this.login = userDto.getLogin();
         this.password = userDto.getPassword();
         this.email = userDto.getEmail();
+        this.permissionLevel = userDto.getPermissionLevel();
     }
 
     @Override
